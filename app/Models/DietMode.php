@@ -24,6 +24,6 @@ class Exercise extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name','linkVd','exercise_mode_id'];
+    protected $fillable = ['name','protein','cenluloza','carb','fat','mode_id'];
 
 }

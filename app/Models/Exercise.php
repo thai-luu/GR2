@@ -17,7 +17,7 @@ class Exercise extends Model
 {
     use TransformableTrait;
    
-    public $table = 'exercise';
+    public $table = 'exercises';
     /**
      * The attributes that are mass assignable.
      *

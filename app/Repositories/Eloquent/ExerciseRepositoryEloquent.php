@@ -4,8 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Contracts\Repositories\UserRepository;
-use App\Models\Excercise;
+use App\Models\Exercise;
 use App\Validators\ExcerciseValidator;
 
 /**
@@ -13,7 +12,7 @@ use App\Validators\ExcerciseValidator;
  *
  * @package namespace App\Repositories\Eloquent;
  */
-class ExcerciseRepositoryEloquent extends BaseRepository
+class ExerciseRepositoryEloquent extends BaseRepository
 {
     /**
      * Specify Model class name
@@ -22,7 +21,7 @@ class ExcerciseRepositoryEloquent extends BaseRepository
      */
     public function model()
     {
-        return Excercise::class;
+        return Exercise::class;
     }
 
     
@@ -38,23 +37,23 @@ class ExcerciseRepositoryEloquent extends BaseRepository
             $perPage = $input['per_page'];
         }
 
-        $users = app($this->model())
+        $exercises = app($this->model())
             ->select($select)  
             ->paginate(10);
         
-        $users->setPath(route('user.index'));
+        $exercises->setPath(route('exercise.index'));
 
-        return $users;
+        return $exercises;
     }
     public function login($input){
         // dd($input);
-        $user = $this->model->where('name', $input['name'])->select('salt', 'password', 'id')->first();
-        if($user){
-            $password = $this->getPassword($user->salt, $input['password']);
+        $exercise = $this->model->where('name', $input['name'])->select('salt', 'password', 'id')->first();
+        if($exercise){
+            $password = $this->getPassword($exercise->salt, $input['password']);
             // dd($password);
-            if($user->password === $password){
+            if($exercise->password === $password){
               
-                auth()->loginUsingId($user->id);
+                auth()->loginUsingId($exercise->id);
         
                 return true;
                 

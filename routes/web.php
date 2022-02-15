@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group(['middleware' => 'permission:QTV|CTV'],function(){
         Route::resource('food', 'FoodController');
         Route::get('/food/delete/{id}','FoodController@destroy')->name('food.delete');
-        Route::resource('excercise', 'ExcerciseController');
+        Route::resource('excercise', 'ExerciseController');
         Route::get('/exercise/delete/{id}','ExerciseController@destroy')->name('exercise.delete');
         Route::resource('exerciseMode', 'ExerciseModeController');
         Route::get('/exerciseMode/delete/{id}','ExerciseModeController@destroy')->name('exerciseMode.delete');

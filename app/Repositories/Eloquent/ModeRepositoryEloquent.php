@@ -27,18 +27,14 @@ class ModeRepositoryEloquent extends BaseRepository
      */
     public function queryDataAll($input, $select = '*')
     {
-
         $perPage = 10;
         if (isset($input['per_page'])) {
             $perPage = $input['per_page'];
         }
-
         $modes = app($this->model())
             ->select($select)  
             ->paginate(10);
-        
         $modes->setPath(route('dietMode.index'));
-
         return $modes;
     }
     public function boot()

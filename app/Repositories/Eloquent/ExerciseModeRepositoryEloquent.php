@@ -4,9 +4,8 @@ namespace App\Repositories\Eloquent;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Contracts\Repositories\ExerciseModeRepository;
 use App\Models\ExerciseMode;
-use App\Validators\ExerciseModeValidator;
+
 
 /**
  * Class ExerciseModeRepositoryEloquent.
@@ -38,33 +37,13 @@ class ExerciseModeRepositoryEloquent extends BaseRepository
             $perPage = $input['per_page'];
         }
 
-        $users = app($this->model())
+        $exercises = app($this->model())
             ->select($select)  
             ->paginate(10);
         
-        $users->setPath(route('user.index'));
+        $exercises->setPath(route('exercise.index'));
 
-        return $users;
-    }
-    public function login($input){
-        // dd($input);
-        $user = $this->model->where('name', $input['name'])->select('salt', 'password', 'id')->first();
-        if($user){
-            $password = $this->getPassword($user->salt, $input['password']);
-            // dd($password);
-            if($user->password === $password){
-              
-                auth()->loginUsingId($user->id);
-        
-                return true;
-                
-            }
-        }
-        return false;
-    }
-    public static function getPassword($salt, $password)
-    {
-        return sha1($salt.$password);
+        return $exercises;
     }
     public function boot()
     {

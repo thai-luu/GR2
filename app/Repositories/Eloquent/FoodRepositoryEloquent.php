@@ -4,7 +4,6 @@ namespace App\Repositories\Eloquent;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-
 use App\Models\Food;
 
 
@@ -38,14 +37,14 @@ class FoodRepositoryEloquent extends BaseRepository
             $perPage = $input['per_page'];
         }
 
-        $users = app($this->model())
+        $foods = app($this->model())
             ->select($select) 
             
-            ->paginate(10);
+            ->paginate($perPage);
         
-        $users->setPath(route('food.index'));
+        $foods->setPath(route('food.index'));
 
-        return $users;
+        return $foods;
     }
     public function boot()
     {

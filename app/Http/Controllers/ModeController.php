@@ -3,22 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\DietModeRepositoryEloquent;
+use App\Repositories\Eloquent\ModeRepositoryEloquent;
 use Flash;
 use Illuminate\Support\Str;
 use Laracasts\Flash\Flash as FlashFlash;
 
-class DietModeController extends Controller
+class ModeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $dietModeRepository;
+    private $modeRepository;
     
-    public function __construct(DietModeRepositoryEloquent $dietModeRepository){
-        $this->dietModeRepository = $dietModeRepository;
+    public function __construct(ModeRepositoryEloquent $modeRepository){
+        $this->modeRepository = $modeRepository;
 
     }
     public function index(Request $request)
@@ -31,14 +31,14 @@ class DietModeController extends Controller
             $dataRequest = $request->all();
         }
 
-        $dietModes = $this->dietModeRepository->queryDataAll($dataRequest);
+        $modes = $this->modeRepository->queryDataAll($dataRequest);
 
         if ($request->ajax()) {
-            return view('dietMode.table', compact('dietModes'))->render();
+            return view('mode.table', compact('modes'))->render();
             
         }
 
-        return view('dietMode.index', compact('dietModes'));
+        return view('mode.index', compact('modes'));
     }
 
     /**
@@ -49,7 +49,7 @@ class DietModeController extends Controller
     public function create()
     {
         
-        return view('dietMode.create');
+        return view('mode.create');
     }
 
     /**
@@ -69,9 +69,9 @@ class DietModeController extends Controller
         $input['fat'] = trim($input['fat']);
         $input['cenluloza'] = trim($input['cenluloza']);
         $input['mode_id'] = trim($input['mode_id']);
-        $dietModes = $this->dietModeRepository->create($input);
+        $modes = $this->modeRepository->create($input);
         Flash::success('Thêm mới chế độ ăn mẫu thành công.');
-        return redirect(route('dietMode.index'));
+        return redirect(route('mode.index'));
     }
    
     
@@ -96,14 +96,14 @@ class DietModeController extends Controller
     public function edit($id)
     {
      
-        $dietMode = $this->dietModeRepository->find($id);
-        if(!$dietMode){
-            Flash::error('dietMode not found');
+        $mode = $this->modeRepository->find($id);
+        if(!$mode){
+            Flash::error('mode not found');
             
-            return redirect('dietMode.index');
+            return redirect('mode.index');
         }
      
-        return view('dietMode.edit',compact('dietMode'));
+        return view('mode.edit',compact('mode'));
     }
 
     /**
@@ -123,9 +123,9 @@ class DietModeController extends Controller
         $input['fat'] = trim($input['fat']);
         $input['cenluloza'] = trim($input['cenluloza']);
         $input['mode_id'] = trim($input['mode_id']);
-        $dietModes = $this->dietModeRepository->update($input,$id);
+        $modes = $this->modeRepository->update($input,$id);
         Flash::success('Thêm mới chế độ ăn mẫu thành công.');
-        return redirect(route('dietMode.index'));
+        return redirect(route('mode.index'));
     }
 
     /**
@@ -136,14 +136,14 @@ class DietModeController extends Controller
      */
     public function destroy($id)
     {
-        $dietMode = $this->dietModeRepository->find($id);
-        if (empty($dietMode)) {
-            Flash::error('dietMode not found');
+        $mode = $this->modeRepository->find($id);
+        if (empty($mode)) {
+            Flash::error('mode not found');
 
-            return redirect(route('dietMode.index'));
+            return redirect(route('mode.index'));
         }
-        $this->dietModeRepository->delete($id);
-        Flash::success('dietMode deleted successfully.');
-        return redirect(route('dietMode.index'));
+        $this->modeRepository->delete($id);
+        Flash::success('mode deleted successfully.');
+        return redirect(route('mode.index'));
     }
 }

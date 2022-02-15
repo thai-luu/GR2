@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\UserRepositoryEloquent;
+use App\Repositories\Eloquent\ExerciseModeRepositoryEloquent;
 use Flash;
 use Illuminate\Support\Str;
-class UserController extends Controller
+class ExerciseModeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $userRepository;
+    private $exerciseModeRepository;
     
-    public function __construct(UserRepositoryEloquent $userRepository){
-        $this->userRepository = $userRepository;
+    public function __construct(ExerciseModeRepositoryEloquent $exerciseRepository){
+        $this->exerciseRepository = $exerciseRepository;
 
     }
     public function index(Request $request)
@@ -29,14 +29,14 @@ class UserController extends Controller
             $dataRequest = $request->all();
         }
 
-        $users = $this->userRepository->queryDataAll($dataRequest);
+        $exercises = $this->exerciseRepository->queryDataAll($dataRequest);
 
         if ($request->ajax()) {
-            return view('user.table', compact('users'))->render();
+            return view('exercise.table', compact('exercises'))->render();
             
         }
 
-        return view('user.index', compact('users'));
+        return view('exercise.index', compact('exercises'));
     }
 
     /**
@@ -46,7 +46,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('exercise.create');
     }
 
     /**
@@ -63,16 +63,16 @@ class UserController extends Controller
         $input['name'] = trim($input['name']);
         $input['algorithm'] = 'sha1';
         $input['password'] = sha1($input['salt'] . e(trim($input['password'])));
-        $users = $this->userRepository->create($input);
+        $exercises = $this->exerciseRepository->create($input);
         if($request->input('permissions') == null) {
             $permissionNames = [];
         }
         else {
             $permissionNames = $request->input('permissions');
         }
-        $users->givePermissionTo($permissionNames);
-        Flash::success('Thêm mới user thành công.');
-        return redirect(route('user.index'));
+        $exercises->givePermissionTo($permissionNames);
+        Flash::success('Thêm mới exercise thành công.');
+        return redirect(route('exercise.index'));
     }
     public function getLogin(){
         return view('welcome');
@@ -81,12 +81,12 @@ class UserController extends Controller
     public function postLogin(Request $request)
     {
        
-            $data = $this->userRepository->login($request->all());
+            $data = $this->exerciseRepository->login($request->all());
             if ($data) {
                 
                 $request->session()->regenerateToken();
                 session()->flash('success', trans('message.login_success'));
-               // activity()->log('User ' . auth()->user()->username . ' was log in');
+               // activity()->log('exercise ' . auth()->exercise()->exercisename . ' was log in');
             } else {
                 session()->flash('error', trans('message.login_fail'));
                 return redirect()->back();

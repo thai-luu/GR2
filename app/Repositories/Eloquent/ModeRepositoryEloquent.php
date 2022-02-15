@@ -4,14 +4,14 @@ namespace App\Repositories\Eloquent;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Models\DietMode;
+use App\Models\Mode;
 
 /**
  * Class UserRepositoryEloquent.
  *
  * @package namespace App\Repositories\Eloquent;
  */
-class DietModeRepositoryEloquent extends BaseRepository 
+class ModeRepositoryEloquent extends BaseRepository 
 {
     /**
      * Specify Model class name
@@ -20,11 +20,8 @@ class DietModeRepositoryEloquent extends BaseRepository
      */
     public function model()
     {
-        return DietMode::class;
+        return Mode::class;
     }
-
-    
-
     /**
      * Boot up the repository, pushing criteria
      */
@@ -36,13 +33,13 @@ class DietModeRepositoryEloquent extends BaseRepository
             $perPage = $input['per_page'];
         }
 
-        $dietModes = app($this->model())
+        $modes = app($this->model())
             ->select($select)  
             ->paginate(10);
         
-        $dietModes->setPath(route('dietMode.index'));
+        $modes->setPath(route('dietMode.index'));
 
-        return $dietModes;
+        return $modes;
     }
     public function boot()
     {

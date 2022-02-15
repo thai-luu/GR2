@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,6 +24,6 @@ class Exercise extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name','linkVd','exercise_mode_id'];
+    protected $fillable = ['name','time','note','calories','linkVd'];
 
 }

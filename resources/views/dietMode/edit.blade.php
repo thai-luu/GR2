@@ -33,10 +33,10 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form class="" action="{{route('user.update',['user' => $user->id])}}" method="post" >
+                    <form class="" action="{{route('dietMode.update',['dietMode' => $dietMode->id])}}" method="post" >
                         @csrf
                         @method('PUT')
-                       @include('user.feilds')
+                       @include('dietMode.feilds')
                     </form>
                    
                 </div>

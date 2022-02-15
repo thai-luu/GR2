@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,11 +13,11 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @package namespace App\Models;
  */
-class Exercise extends Model
+class ExerciseMode extends Model
 {
     use TransformableTrait;
    
-    public $table = 'exercise';
+    public $table = 'exercise_modes';
     /**
      * The attributes that are mass assignable.
      *

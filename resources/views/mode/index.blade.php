@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1 class="pull-left">DANH SÁCH USER</h1>
+        <h1 class="pull-left">DANH SÁCH ĐỐI TƯỢNG TẬP LUYỆN</h1>
     </section>
     <div class="content">
         <div class="clearfix"></div>
@@ -10,16 +10,12 @@
         @include('flash::message')
 
         <div class="clearfix"></div>
-
-        
             <div class="box-body">
                 <form class="row" id="formFilter">
                     <div class="form-group col-md-2 s_search">
-                        <label for="">Phân loại</label>
+                        <label for="">Tìm theo</label>
                         <select class="form-control" name="key" id="onPage">
-                            @foreach ($modes as $mode)
-                            <option value="{{$mode->id}}" >{{$mode->name}}</option>
-                            @endforeach
+                            <option value="name" >Tên</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
@@ -35,7 +31,7 @@
                 </form>
 
                 <div id="table" class="table-responsive">
-                    @include('dietMode.table')
+                    @include('mode.table')
                 </div>
             </div>
 
@@ -57,7 +53,7 @@
 
 @push('scripts')
     <script>
-        var url = '{{route('dietMode.index')}}';
+        var url = '{{route('mode.index')}}';
     </script>
 
     <script src="/js/search.js"></script>

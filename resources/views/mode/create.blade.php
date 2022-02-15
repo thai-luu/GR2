@@ -36,9 +36,9 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form class="" action="{{route('dietMode.store')}}" method="post" >
+                    <form class="" action="{{route('mode.store')}}" method="post" >
                         @csrf
-                       @include('dietMode.feilds')
+                       @include('mode.feilds')
                     </form>
                 </div>
             </div>

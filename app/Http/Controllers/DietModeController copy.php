@@ -3,20 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\UserRepositoryEloquent;
+use App\Repositories\Eloquent\DietModeRepositoryEloquent;
+use App\Repositories\Eloquent\ModeRepositoryEloquent;
 use Flash;
 use Illuminate\Support\Str;
-class UserController extends Controller
+use Laracasts\Flash\Flash as FlashFlash;
+
+class DietModeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $userRepository;
+    private $dietModeRepository;
+    private $modeRepository;
     
-    public function __construct(UserRepositoryEloquent $userRepository){
-        $this->userRepository = $userRepository;
+    public function __construct(DietModeRepositoryEloquent $dietModeRepository,ModeRepositoryEloquent $modeRepository){
+        $this->dietModeRepository = $dietModeRepository;
+        $this->modeRepository = $modeRepository;
 
     }
     public function index(Request $request)
@@ -29,14 +34,14 @@ class UserController extends Controller
             $dataRequest = $request->all();
         }
 
-        $users = $this->userRepository->queryDataAll($dataRequest);
-
+        $dietModes = $this->dietModeRepository->queryDataAll($dataRequest);
+        $modes = $this->modeRepository->queryDataAll($dataRequest);
         if ($request->ajax()) {
-            return view('user.table', compact('users'))->render();
+            return view('dietMode.table', compact('dietModes'))->render();
             
         }
 
-        return view('user.index', compact('users'));
+        return view('dietMode.index', compact('dietModes'));
     }
 
     /**
@@ -46,7 +51,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        
+        return view('dietMode.create');
     }
 
     /**
@@ -59,42 +65,20 @@ class UserController extends Controller
     {
      
         $input = $request->all();
-        $input['salt'] = md5(Str::random());
+        
         $input['name'] = trim($input['name']);
-        $input['algorithm'] = 'sha1';
-        $input['password'] = sha1($input['salt'] . e(trim($input['password'])));
-        $users = $this->userRepository->create($input);
-        if($request->input('permissions') == null) {
-            $permissionNames = [];
-        }
-        else {
-            $permissionNames = $request->input('permissions');
-        }
-        $users->givePermissionTo($permissionNames);
-        Flash::success('Thêm mới user thành công.');
-        return redirect(route('user.index'));
+        $input['protein'] = trim($input['protein']);
+        $input['carb'] = trim($input['carb']);
+        $input['fat'] = trim($input['fat']);
+        $input['cenluloza'] = trim($input['cenluloza']);
+        $input['mode_id'] = trim($input['mode_id']);
+        $dietModes = $this->dietModeRepository->create($input);
+        Flash::success('Thêm mới chế độ ăn mẫu thành công.');
+        return redirect(route('dietMode.index'));
     }
-    public function getLogin(){
-        return view('welcome');
-    }
+   
     
-    public function postLogin(Request $request)
-    {
-       
-            $data = $this->userRepository->login($request->all());
-            if ($data) {
-                
-                $request->session()->regenerateToken();
-                session()->flash('success', trans('message.login_success'));
-               // activity()->log('User ' . auth()->user()->username . ' was log in');
-            } else {
-                session()->flash('error', trans('message.login_fail'));
-                return redirect()->back();
-            }
-
-     
-        return redirect('/home');
-    }
+    
     /**
      * Display the specified resource.
      *
@@ -103,7 +87,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -114,7 +98,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+     
+        $dietMode = $this->dietModeRepository->find($id);
+        if(!$dietMode){
+            Flash::error('dietMode not found');
+            
+            return redirect('dietMode.index');
+        }
+     
+        return view('dietMode.edit',compact('dietMode'));
     }
 
     /**
@@ -126,7 +118,17 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        
+        $input['name'] = trim($input['name']);
+        $input['protein'] = trim($input['protein']);
+        $input['carb'] = trim($input['carb']);
+        $input['fat'] = trim($input['fat']);
+        $input['cenluloza'] = trim($input['cenluloza']);
+        $input['mode_id'] = trim($input['mode_id']);
+        $dietModes = $this->dietModeRepository->update($input,$id);
+        Flash::success('Thêm mới chế độ ăn mẫu thành công.');
+        return redirect(route('dietMode.index'));
     }
 
     /**
@@ -137,6 +139,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dietMode = $this->dietModeRepository->find($id);
+        if (empty($dietMode)) {
+            Flash::error('dietMode not found');
+
+            return redirect(route('dietMode.index'));
+        }
+        $this->dietModeRepository->delete($id);
+        Flash::success('dietMode deleted successfully.');
+        return redirect(route('dietMode.index'));
     }
 }

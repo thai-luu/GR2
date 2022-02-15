@@ -3,22 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\FoodRepositoryEloquent;
+use App\Repositories\Eloquent\DietModeRepositoryEloquent;
 use Flash;
 use Illuminate\Support\Str;
 use Laracasts\Flash\Flash as FlashFlash;
 
-class FoodController extends Controller
+class DietModeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $foodRepository;
+    private $dietModeRepository;
     
-    public function __construct(FoodRepositoryEloquent $foodRepository){
-        $this->foodRepository = $foodRepository;
+    public function __construct(DietModeRepositoryEloquent $dietModeRepository){
+        $this->dietModeRepository = $dietModeRepository;
 
     }
     public function index(Request $request)
@@ -31,14 +31,14 @@ class FoodController extends Controller
             $dataRequest = $request->all();
         }
 
-        $foods = $this->foodRepository->queryDataAll($dataRequest);
+        $dietModes = $this->dietModeRepository->queryDataAll($dataRequest);
 
         if ($request->ajax()) {
-            return view('food.table', compact('foods'))->render();
+            return view('dietMode.table', compact('dietModes'))->render();
             
         }
 
-        return view('food.index', compact('foods'));
+        return view('dietMode.index', compact('dietModes'));
     }
 
     /**
@@ -49,7 +49,7 @@ class FoodController extends Controller
     public function create()
     {
         
-        return view('food.create');
+        return view('dietMode.create');
     }
 
     /**
@@ -67,16 +67,11 @@ class FoodController extends Controller
         $input['protein'] = trim($input['protein']);
         $input['carb'] = trim($input['carb']);
         $input['fat'] = trim($input['fat']);
-        $input['vitaminA'] = trim($input['vitaminA']);
-        $input['vitaminB'] = trim($input['vitaminB']);
-        $input['natri'] = trim($input['natri']);
-        $input['kali'] = trim($input['kali']);
-        $input['natri'] = trim($input['natri']);
-        $input['calo'] = trim($input['calo']);
         $input['cenluloza'] = trim($input['cenluloza']);
-        $foods = $this->foodRepository->create($input);
-        Flash::success('Thêm mới food thành công.');
-        return redirect(route('food.index'));
+        $input['mode_id'] = trim($input['mode_id']);
+        $dietModes = $this->dietModeRepository->create($input);
+        Flash::success('Thêm mới chế độ ăn mẫu thành công.');
+        return redirect(route('dietMode.index'));
     }
    
     
@@ -89,7 +84,7 @@ class FoodController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -101,14 +96,14 @@ class FoodController extends Controller
     public function edit($id)
     {
      
-        $food = $this->foodRepository->find($id);
-        if(!$food){
-            Flash::error('Food not found');
+        $dietMode = $this->dietModeRepository->find($id);
+        if(!$dietMode){
+            Flash::error('dietMode not found');
             
-            return redirect('food.index');
+            return redirect('dietMode.index');
         }
      
-        return view('food.edit',compact('food'));
+        return view('dietMode.edit',compact('dietMode'));
     }
 
     /**
@@ -126,16 +121,11 @@ class FoodController extends Controller
         $input['protein'] = trim($input['protein']);
         $input['carb'] = trim($input['carb']);
         $input['fat'] = trim($input['fat']);
-        $input['vitaminA'] = trim($input['vitaminA']);
-        $input['vitaminB'] = trim($input['vitaminB']);
-        $input['natri'] = trim($input['natri']);
-        $input['kali'] = trim($input['kali']);
-        $input['natri'] = trim($input['natri']);
-        $input['calo'] = trim($input['calo']);
         $input['cenluloza'] = trim($input['cenluloza']);
-        $foods = $this->foodRepository->update($input,$id);
-        Flash::success('Cập nhật food thành công.');
-        return redirect(route('food.index'));
+        $input['mode_id'] = trim($input['mode_id']);
+        $dietModes = $this->dietModeRepository->update($input,$id);
+        Flash::success('Thêm mới chế độ ăn mẫu thành công.');
+        return redirect(route('dietMode.index'));
     }
 
     /**
@@ -146,14 +136,14 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        $food = $this->foodRepository->find($id);
-        if (empty($food)) {
-            Flash::error('food not found');
+        $dietMode = $this->dietModeRepository->find($id);
+        if (empty($dietMode)) {
+            Flash::error('dietMode not found');
 
-            return redirect(route('food.index'));
+            return redirect(route('dietMode.index'));
         }
-        $this->foodRepository->delete($id);
-        Flash::success('food deleted successfully.');
-        return redirect(route('food.index'));
+        $this->dietModeRepository->delete($id);
+        Flash::success('dietMode deleted successfully.');
+        return redirect(route('dietMode.index'));
     }
 }

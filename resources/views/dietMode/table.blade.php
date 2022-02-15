@@ -4,35 +4,35 @@
 @include('flash::message')
 
 <div class="table-responsive">
-    <table class="table" id="users-table">
+    <table class="table" id="dietModes-table">
         <thead>
             <tr>
                 <th width="10"><input type="checkbox" class="s_check_all"></th>
                 <th>ID</th>
                 <th>Tên</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Created_at</th>
+                <th>Carb</th>
+                <th>Protein</th>
+                <th>Fat</th>
+                <th>Cenluloza</th>
+                <th>Phân loại</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
         <tbody>
-        @foreach($users as $user)
+        @foreach($dietModes as $dietMode)
             <tr>
-                <td><input type="checkbox" class="cb_select_record check" value="{{$user->id}}"></td>
-                <td>{{ $user ? $user->id : 0 }}</td>
-                <td>{{ $user ? $user->name : ''}}</td>
-                <td>{{ $user ? $user->email : ''}}</td>
-                <td>{{ $user ? $user->role : ''}}</td>
-                <td>{{ $user ? $user->created_at : 0 }}</td>
+                <td><input type="checkbox" class="cb_select_record check" value="{{$dietMode->id}}"></td>
+                <td>{{ $dietMode ? $dietMode->id : 0 }}</td>
+                <td>{{ $dietMode ? $dietMode->name : ''}}</td>
+                <td>{{ $dietMode ? $dietMode->carb : ''}}%</td>
+                <td>{{ $dietMode ? $dietMode->protein : ''}}%</td>
+                <td>{{ $dietMode ? $dietMode->fat : ''}}%</td>
+                <td>{{ $dietMode ? $dietMode->cenluloza : ''}}%</td>
+                <td>{{ $dietMode ? $dietMode->mode->name : ''}}%</td>
                 <td>
-                   
-                    <div class='btn-group'>
-                       
-                        <a href="{{ route('user.edit', [$user->id]) }}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
-                        
+                    <div class='btn-group'> 
+                        <a href="{{ route('dietMode.edit', [$dietMode->id]) }}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>    
                     </div>
-
                 </td>
             </tr>
             <?php $count++; ?>
@@ -41,15 +41,15 @@
     </table>
 </div>
 
-@if($users != [])
+@if($dietModes != [])
 <div class="linkPage">
-    {{ $users->links('vendor.pagination.bootstrap-4') }}
+    {{ $dietModes->links('vendor.pagination.bootstrap-4') }}
 </div>
 @endif
-@if($users == [])
+@if($dietModes == [])
     <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: 0</p></div>
-@elseif($users->total()<= 10)
-    <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: {{$users->total()}}</p></div>
-@elseif ($users->total() > 10)
-    <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: {{$count}} trên tổng số {{$users->total()}} bản ghi</p></div>
+@elseif($dietModes->total()<= 10)
+    <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: {{$dietModes->total()}}</p></div>
+@elseif ($dietModes->total() > 10)
+    <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: {{$count}} trên tổng số {{$dietModes->total()}} bản ghi</p></div>
 @endif

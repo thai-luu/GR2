@@ -2,13 +2,10 @@
 @section('content')
 <div class="">
     <div class="page-title">
-        <div class="clearfix"></div>
-        @include('flash::message')
-        <div class="clearfix"></div>
         <div class="title_left">
             <h3>Form Validation</h3>
         </div>
-       
+
         <div class="title_right">
             <div class="col-md-5 col-sm-5 form-group pull-right top_search">
                 <div class="input-group">
@@ -36,10 +33,12 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form class="" action="{{route('dietMode.store')}}" method="post" >
+                    <form class="" action="{{route('mode.update',['mode' => $mode->id])}}" method="post" >
                         @csrf
-                       @include('dietMode.feilds')
+                        @method('PUT')
+                       @include('mode.feilds')
                     </form>
+                   
                 </div>
             </div>
         </div>

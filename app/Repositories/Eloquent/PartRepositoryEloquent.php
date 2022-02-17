@@ -4,15 +4,16 @@ namespace App\Repositories\Eloquent;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Models\ExerciseMode;
-
+use App\Contracts\Repositories\UserRepository;
+use App\Models\Part;
+use App\Validators\FoodModeValidator;
 
 /**
- * Class ExerciseModeRepositoryEloquent.
+ * Class FoodModeRepositoryEloquent.
  *
  * @package namespace App\Repositories\Eloquent;
  */
-class ExerciseModeRepositoryEloquent extends BaseRepository
+class PartRepositoryEloquent extends BaseRepository
 {
     /**
      * Specify Model class name
@@ -21,8 +22,11 @@ class ExerciseModeRepositoryEloquent extends BaseRepository
      */
     public function model()
     {
-        return ExerciseMode::class;
+        return Part::class;
     }
+
+    
+
     /**
      * Boot up the repository, pushing criteria
      */
@@ -34,13 +38,13 @@ class ExerciseModeRepositoryEloquent extends BaseRepository
             $perPage = $input['per_page'];
         }
 
-        $exercises = app($this->model())
+        $parts = app($this->model())
             ->select($select)  
             ->paginate(10);
         
-        $exercises->setPath(route('exercise.index'));
+        $parts->setPath(route('part.index'));
 
-        return $exercises;
+        return $parts;
     }
     public function boot()
     {

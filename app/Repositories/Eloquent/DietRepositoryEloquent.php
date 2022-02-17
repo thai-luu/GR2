@@ -37,34 +37,11 @@ class DietRepositoryEloquent extends BaseRepository
         if (isset($input['per_page'])) {
             $perPage = $input['per_page'];
         }
-
         $users = app($this->model())
             ->select($select)  
             ->paginate(10);
-        
         $users->setPath(route('user.index'));
-
         return $users;
-    }
-    public function login($input){
-        // dd($input);
-        $user = $this->model->where('name', $input['name'])->select('salt', 'password', 'id')->first();
-        if($user){
-            $password = $this->getPassword($user->salt, $input['password']);
-            // dd($password);
-            if($user->password === $password){
-              
-                auth()->loginUsingId($user->id);
-        
-                return true;
-                
-            }
-        }
-        return false;
-    }
-    public static function getPassword($salt, $password)
-    {
-        return sha1($salt.$password);
     }
     public function boot()
     {

@@ -33,7 +33,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form class="" action="{{route('food.store')}}" method="post" >
+                    <form class="" action="{{route('exercise.store')}}" method="post" >
                         @csrf
                       @include('exercise.fields')
                     </form>

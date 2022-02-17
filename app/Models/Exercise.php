@@ -25,5 +25,11 @@ class Exercise extends Model
      */
     public $timestamps = TRUE;
     protected $fillable = ['name','time','note','calories','linkVd'];
-
+    public function partmini(){
+        return $this->belongsToMany('App\Models\PartMini','id','id');
+    }
+    public function trainingSession()
+    {
+        return $this->morphToMany('App\Models\TrainingSession', 'train_mode');
+    } 
 }

@@ -26,7 +26,10 @@ class Mode extends Model
      */
     public $timestamps = TRUE;
     protected $fillable = ['name'];
-    public function dietMode(){
-        return $this->hasMany('Apps/Models/DietMode','mode_id','id');
+    public function user(){
+        return $this->hasMany('Apps\Models\User','mode_id','id');
+    }
+    public function exerciseMode(){
+        return $this->hasMany('Apps\Models\ExerciseMode','mode_id','id');
     }
 }

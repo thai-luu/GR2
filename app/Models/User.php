@@ -28,11 +28,11 @@ class User extends Authenticatable
     protected $fillable = ['name', 'email', 'password', 'role', 'telephone', 'salt', 'algorithm'];
     public function scopeFilter($query, $input)
     {
-       // dd($input);
-
-
         if (isset($input['keyword']))
             $query->where('name', 'like', '%'.$input['keyword'].'%');
        
+    }
+    public function physicalCondition(){
+        return $this->belongsTo('App/Models/PhysicalCondition','physical_condition_id','id');
     }
 }

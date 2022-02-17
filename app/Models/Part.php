@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
@@ -14,19 +13,19 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @package namespace App\Models;
  */
-class DietMode extends Model
+class Part extends Model
 {
     use TransformableTrait;
    
-    public $table = 'diet_modes';
+    public $table = 'parts';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name','protein','cenluloza','carb','fat','mode_id'];
-    public function mode(){
-        return $this->belongsTo('App\Models\Mode','mode_id','id');
+    public function partmini(){
+        return $this->hasMany('App\Models\PartMini','part_id','id');
     }
+
 }

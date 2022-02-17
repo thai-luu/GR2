@@ -24,6 +24,9 @@ class ExerciseMode extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name','linkVd','exercise_mode_id'];
-
+    protected $fillable = ['name','description'];
+    public function trainingSession()
+    {
+        return $this->morphToMany('App\Models\TrainingSession', 'train_mode');
+    } 
 }

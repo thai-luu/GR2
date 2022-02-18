@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
+ * Tình trạng cơ thể (béo, gầy, trung bình)
  * @package namespace App\Models;
  */
 class PhysicalCondition extends Model
@@ -28,10 +28,10 @@ class PhysicalCondition extends Model
         return $this->hasMany('App\Models\User','physical_condition_id','id');
     }
     public function exerciseMode(){
-        return $this->hasMany('App\Models\ExerciseMode','exercise_mode_id','id');
+        return $this->hasMany('App\Models\ExerciseMode','physical_condition_id','id');
     }
     public function dietMode(){
-        return $this->hasMany('App\Models\DietMode','diet_mode_id','id');
+        return $this->hasMany('App\Models\DietMode','physical_condition_id','id');
     }
 
 }

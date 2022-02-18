@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
+ * Chế độ ăn
  * @package namespace App\Models;
  */
 class DietMode extends Model

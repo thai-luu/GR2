@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
+ * Bộ phận
  * @package namespace App\Models;
  */
 class Part extends Model

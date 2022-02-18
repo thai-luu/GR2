@@ -113,8 +113,8 @@
                   </li>
               </ul>
             </li>     
-            <li><a href="{{route('excercise.index')}}"><i class="fa fa-laptop"></i> Quản lý các bài tập </a></li> 
-            <li><a href="{{route('excerciseMode.index')}}"><i class="fa fa-laptop"></i> Quản lý giáo án tập mẫu </a></li>            
+            <li><a href="{{route('exercise.index')}}"><i class="fa fa-laptop"></i> Quản lý các bài tập </a></li> 
+            <li><a href="{{route('exerciseMode.index')}}"><i class="fa fa-laptop"></i> Quản lý giáo án tập mẫu </a></li>            
             <li><a href="{{route('dietMode.index')}}"><i class="fa fa-laptop"></i> Quản lý chế độ ăn mẫu </a></li>
             <li><a href="{{route('user.index')}}"><i class="fa fa-laptop"></i> Quản lý user </a></li>
             <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>

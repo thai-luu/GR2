@@ -4,7 +4,7 @@
 @include('flash::message')
 
 <div class="table-responsive">
-    <table class="table" id="foods-table">
+    <table class="table" id="exerciseModes-table">
         <thead>
             <tr>
                 <th width="10"><input type="checkbox" class="s_check_all"></th>
@@ -22,22 +22,22 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($foods as $food)
+        @foreach($exerciseModes as $exerciseMode)
             <tr>
-                <td><input type="checkbox" class="cb_select_record check" value="{{$food->id}}"></td>
-                <td>{{ $food ? $food->id : 0 }}</td>
-                <td>{{ $food ? $food->name : ''}}</td>
-                <td>{{ $food ? $food->protein : ''}}</td>
-                <td>{{ $food ? $food->carb : ''}}</td>
-                <td>{{ $food ? $food->fat : 0 }}</td>
-                <td>{{ $food ? $food->vitaminA : 0 }}</td>
-                <td>{{ $food ? $food->vitaminB : ''}}</td>
-                <td>{{ $food ? $food->natri : ''}}</td>
-                <td>{{ $food ? $food->kali : ''}}</td>
+                <td><input type="checkbox" class="cb_select_record check" value="{{$exerciseMode->id}}"></td>
+                <td>{{ $exerciseMode ? $exerciseMode->id : 0 }}</td>
+                <td>{{ $exerciseMode ? $exerciseMode->name : ''}}</td>
+                <td>{{ $exerciseMode ? $exerciseMode->protein : ''}}</td>
+                <td>{{ $exerciseMode ? $exerciseMode->carb : ''}}</td>
+                <td>{{ $exerciseMode ? $exerciseMode->fat : 0 }}</td>
+                <td>{{ $exerciseMode ? $exerciseMode->vitaminA : 0 }}</td>
+                <td>{{ $exerciseMode ? $exerciseMode->vitaminB : ''}}</td>
+                <td>{{ $exerciseMode ? $exerciseMode->natri : ''}}</td>
+                <td>{{ $exerciseMode ? $exerciseMode->kali : ''}}</td>
                 <td>
                    
                     <div class='btn-group'>  
-                     <a href="{{ route('food.edit', [$food->id]) }}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>               
+                     <a href="{{ route('exerciseMode.edit', [$exerciseMode->id]) }}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>               
                     </div>
                 </td>
             </tr>
@@ -47,15 +47,15 @@
     </table>
 </div>
 
-@if($foods != [])
+@if($exerciseModes != [])
 <div class="linkPage">
-    {{ $foods->links('vendor.pagination.bootstrap-4') }}
+    {{ $exerciseModes->links('vendor.pagination.bootstrap-4') }}
 </div>
 @endif
-@if($foods == [])
+@if($exerciseModes == [])
     <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: 0</p></div>
-@elseif($foods->total()<= 10)
-    <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: {{$foods->total()}}</p></div>
-@elseif ($foods->total() > 10)
-    <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: {{$count}} trên tổng số {{$foods->total()}} bản ghi</p></div>
+@elseif($exerciseModes->total()<= 10)
+    <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: {{$exerciseModes->total()}}</p></div>
+@elseif ($exerciseModes->total() > 10)
+    <div><p style="margin-top: 15px; font-weight: bold;color: red;position: absolute;right: 28px;">Tổng số bản ghi: {{$count}} trên tổng số {{$exerciseModes->total()}} bản ghi</p></div>
 @endif

@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
+ * Một bài tập
  * @package namespace App\Models;
  */
 class Exercise extends Model

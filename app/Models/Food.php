@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User.
- *
+ * Thực phẩm
  * @package namespace App\Models;
  */
 class Food extends Model 

@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
+ * Chế độ tập luyện
  * @package namespace App\Models;
  */
 class ExerciseMode extends Model
@@ -24,9 +24,15 @@ class ExerciseMode extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name','description'];
+    protected $fillable = ['name','description','bmi'];
     public function trainingSession()
     {
         return $this->morphToMany('App\Models\TrainingSession', 'train_mode');
-    } 
+    }
+    public function mode(){
+        return $this->belongsToMany('App\Models\mode','mode_id','id');
+    }
+    public function physical_conditions(){
+        return $this->belongsToMany('App\Models\PhysicalConditions','physical_conditions','id');
+    }
 }

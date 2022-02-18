@@ -15,8 +15,8 @@ class ExerciseModeController extends Controller
      */
     private $exerciseModeRepository;
     
-    public function __construct(ExerciseModeRepositoryEloquent $exerciseRepository){
-        $this->exerciseRepository = $exerciseRepository;
+    public function __construct(ExerciseModeRepositoryEloquent $exerciseModeRepository){
+        $this->exerciseModeRepository = $exerciseModeRepository;
 
     }
     public function index(Request $request)
@@ -29,14 +29,14 @@ class ExerciseModeController extends Controller
             $dataRequest = $request->all();
         }
 
-        $exercises = $this->exerciseRepository->queryDataAll($dataRequest);
+        $exerciseModes = $this->exerciseModeRepository->queryDataAll($dataRequest);
 
         if ($request->ajax()) {
-            return view('exercise.table', compact('exercises'))->render();
+            return view('exerciseMode.table', compact('exerciseModes'))->render();
             
         }
 
-        return view('exercise.index', compact('exercises'));
+        return view('exerciseMode.index', compact('exerciseModes'));
     }
 
     /**
@@ -46,7 +46,7 @@ class ExerciseModeController extends Controller
      */
     public function create()
     {
-        return view('exercise.create');
+        return view('exerciseMode.create');
     }
 
     /**
@@ -63,7 +63,7 @@ class ExerciseModeController extends Controller
         $input['name'] = trim($input['name']);
         $input['algorithm'] = 'sha1';
         $input['password'] = sha1($input['salt'] . e(trim($input['password'])));
-        $exercises = $this->exerciseRepository->create($input);
+        $exercises = $this->exerciseModeRepository->create($input);
         if($request->input('permissions') == null) {
             $permissionNames = [];
         }

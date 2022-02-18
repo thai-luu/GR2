@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
+ * Nhóm cơ trên một bộ phận
  * @package namespace App\Models;
  */
 class PartMini extends Model

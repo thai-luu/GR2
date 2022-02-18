@@ -33,7 +33,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form class="" action="{{route('exerciseMode.store')}}" method="post" >
+                    <form class="formExercise" action="{{route('exerciseMode.store')}}" method="post" >
                         @csrf
                         @include('exerciseMode.feilds')
                     </form>

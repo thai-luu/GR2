@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- *
+ * Bữa ăn
  * @package namespace App\Models;
  */
 class User extends Model 

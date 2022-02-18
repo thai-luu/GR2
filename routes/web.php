@@ -16,18 +16,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', function () {
-    return view('layouts.default');
-})->middleware('auth','permission:QTV|CTV');
+
 Route::group(['middleware' => 'auth'], function(){
-    Route::group(['middleware' => 'permission:QTV'],function(){
+    Route::group(['middleware' => ['permission:QTV']],function(){    
         Route::resource('user', 'UserController');
         Route::get('/user/delete/{id}','UserController@destroy')->name('user.delete');
     });
-    Route::group(['middleware' => 'permission:QTV|CTV'],function(){
+    Route::group(['middleware' => ['permission:QTV|CTV']],function(){
+        Route::get('/home', function () {
+            return view('layouts.default');
+        });
         Route::resource('food', 'FoodController');
         Route::get('/food/delete/{id}','FoodController@destroy')->name('food.delete');
-        Route::resource('excercise', 'ExerciseController');
+        Route::resource('exercise', 'ExerciseController');
         Route::get('/exercise/delete/{id}','ExerciseController@destroy')->name('exercise.delete');
         Route::resource('exerciseMode', 'ExerciseModeController');
         Route::get('/exerciseMode/delete/{id}','ExerciseModeController@destroy')->name('exerciseMode.delete');

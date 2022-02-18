@@ -1,26 +1,27 @@
 <span class="section">Thông tin chế độ tập</span>
+<div id="exer">
 <div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Name<span class="required">*</span></label>
+    <label class="col-form-label col-md-3 col-sm-3  label-align">Name<span class="">*</span></label>
     <div class="col-md-6 col-sm-6">
-        <input class="form-control" data-validate-length-range="6" data-validate-words="2" name="name" value="{{$excerciseMode->name ?? ''}}" required="required" />
+        <input class="form-control" data-validate-length-range="6" data-validate-words="2" name="name" value="{{$excerciseMode->name ?? ''}}"  />
     </div>
 </div>
 <div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Thời gian<span class="required">*</span></label>
+    <label class="col-form-label col-md-3 col-sm-3  label-align">Thời gian<span class="">*</span></label>
     <div class="col-md-6 col-sm-6">
-        <input class="form-control" name="time"  required="required" value="{{$excerciseMode->time ?? ''}}" type="text" /></div>
+        <input class="form-control" name="time"   value="{{$excerciseMode->time ?? ''}}" type="text" /></div>
 </div>                   
 <div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Ghi chú<span class="required">*</span></label>
+    <label class="col-form-label col-md-3 col-sm-3  label-align">Ghi chú<span class="">*</span></label>
     <div class="col-md-6 col-sm-6">
-        <input class="form-control" type="text" id="Carb" name="note" pattern="{8,}" value="{{$excerciseMode->note ?? ''}}" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required />
+        <input class="form-control" type="text" id="Carb" name="note" pattern="{8,}" value="{{$excerciseMode->note ?? ''}}" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character"  />
     </div>
 </div>
 
 <div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Calo đốt cháy<span class="required">*</span></label>
+    <label class="col-form-label col-md-3 col-sm-3  label-align">Calo đốt cháy<span class="">*</span></label>
     <div class="col-md-6 col-sm-6">
-        <input class="form-control" type="text" data-validate-linked='password' name="calories" value="{{$excerciseMode->calories ?? ''}}" required='required' /></div>
+        <input class="form-control" type="text" data-validate-linked='password' name="calories" value="{{$excerciseMode->calories ?? ''}}"  /></div>
 </div>
 <div class="field item form-group">
     <label class="control-label col-md-3 col-sm-3  label-align ">Phân loại</label>
@@ -32,31 +33,17 @@
         </select>
     </div>
 </div>
-<div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Vitamin A<span class="required">*</span></label>
+<div class="field item form-group" id="BuoiTap">
+    <label class="col-form-label col-md-3 col-sm-3  label-align" id="'buoi' + i">Buoi tap<span class="">*</span></label>
     <div class="col-md-6 col-sm-6">
-        <input class="form-control" type="text" name="vitaminA" data-validate-linked='password' name="fat" value="{{$excerciseMode->vitaminA ?? ''}}" required='required' /></div>
+        <input class="form-control" type="text" name="'buoi' + i" data-validate-linked='password' name="fat" value="{{$excerciseMode->vitaminA ?? ''}}"  /></div>
+    </div>
+<div class="field item form-group">
+    <button type="button" onclick="themBt()">
+        Thêm buổi tập
+    </button>
 </div>
-<div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Vitamin B<span class="required">*</span></label>
-    <div class="col-md-6 col-sm-6">
-        <input class="form-control" type="text"  name="vitaminB" required='required' value="{{$excerciseMode->cenluloza ?? ''}}" data-validate-length-range="8,20" /></div>
 </div>
-<div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Natri<span class="required">*</span></label>
-    <div class="col-md-6 col-sm-6">
-        <input class="form-control" type="text" name="natri" data-validate-linked='password' name="fat" value="{{$excerciseMode->natri ?? ''}}" required='required' /></div>
-</div>
-<div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Kali<span class="required">*</span></label>
-    <div class="col-md-6 col-sm-6">
-        <input class="form-control" type="tex"  name="kali" required='required' value="{{$excerciseMode->cenluloza ?? ''}}" data-validate-length-range="8,20" /></div>
-</div>
-<div class="field item form-group">
-    <label class="col-form-label col-md-3 col-sm-3  label-align">Calories<span class="required">*</span></label>
-    <div class="col-md-6 col-sm-6">
-        <input class="form-control" type="tex"  name="calo" required='required' value="{{$excerciseMode->calo ?? ''}}" data-validate-length-range="8,20" /></div>
-</div>        
 <div class="ln_solid">
     <div class="form-group">
         <div class="col-md-6 offset-md-3">
@@ -68,3 +55,14 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    $(document).ready(function(){
+    function themBt(){
+        console.log(123);
+        $("#exer").append("<div class="field item form-group"><label class="col-form-label col-md-3 col-sm-3  label-align" id="i">Buoi tap<span class="">*</span></label><div class="col-md-6 col-sm-6"><input class="form-control" type="text" name="i" data-validate-linked='password' name="fat" value=""  /></div></div>");
+    }
+});
+</script>
+@endpush

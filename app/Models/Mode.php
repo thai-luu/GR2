@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class Mode.
- *
+ * Tạng người
  * @package namespace App\Models;
  */
 class Mode extends Model 
@@ -28,6 +28,9 @@ class Mode extends Model
     protected $fillable = ['name'];
     public function user(){
         return $this->hasMany('Apps\Models\User','mode_id','id');
+    }
+    public function physicalCondition(){
+        return $this->hasMany('Apps\Models\PhysicalCondition','mode_id','id');
     }
     public function exerciseMode(){
         return $this->hasMany('Apps\Models\ExerciseMode','mode_id','id');

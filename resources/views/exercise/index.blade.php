@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1 class="pull-left">DANH SÁCH User</h1>
+        <h1 class="pull-left">DANH SÁCH exercise</h1>
     </section>
     <div class="content">
         <div class="clearfix"></div>
@@ -17,9 +17,9 @@
                     <div class="form-group col-md-2 s_search">
                         <label for="">Quyền</label>
                         <select class="form-control" name="onPage" id="onPage">
-                            <option value="2" {{ ($users->total()!=0 ) && $users[0]->onPage == 2 ? 'selected':'' }}>Quản trị hệ thống</option>
-                            <option value="1" {{ ($users->total()!=0 ) && $users[0]->onPage == 1 ? 'selected':'' }}>Cộng tác viên</option>
-                            <option value="0" {{ ($users->total()!=0 ) && $users[0]->onPage == 0 ? 'selected':'' }}>Khách hàng</option>
+                            <option value="2" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 2 ? 'selected':'' }}>Quản trị hệ thống</option>
+                            <option value="1" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 1 ? 'selected':'' }}>Cộng tác viên</option>
+                            <option value="0" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 0 ? 'selected':'' }}>Khách hàng</option>
                             <option value="100" {{ request()->get('onPage')== 100 ? 'selected': '' }}>Tất cả</option>
                         </select>
                     </div>
@@ -36,13 +36,13 @@
                 </form>
 
                 <div id="table" class="table-responsive">
-                    @include('user.table')
+                    @include('exercise.table')
                 </div>
             </div>
 
             <div class="raw">
                 <h1>
-                    <a class="btn btn-primary primaryt" style="background-color:#E43F7E; color:#fff; margin-top: -9px;margin-bottom: 5px" href="{{ route('user.create') }}">Thêm mới</a>
+                    <a class="btn btn-primary primaryt" style="background-color:#E43F7E; color:#fff; margin-top: -9px;margin-bottom: 5px" href="{{ route('exercise.create') }}">Thêm mới</a>
                     <a class="btn btn-success" style="margin-top: -10px;margin-bottom: 5px;" id="cmdDisplay">Duyệt</a>
                     <a class="btn btn-info" style="margin-top: -10px;margin-bottom: 5px" id="cmdRemove">Gỡ duyệt</a>
                     <a class="btn btn-danger" style="margin-right: 5px;margin-top: -10px;margin-bottom: 5px" id="cmdDelete">Xóa</a>
@@ -58,7 +58,7 @@
 
 @push('scripts')
     <script>
-        var url = '{{route('user.index')}}';
+        var url = '{{route('exercise.index')}}';
     </script>
 
     {{-- <script src="{{config('config.js_host')}}/js/filterTable.js?v={{VERSION}}"></script>

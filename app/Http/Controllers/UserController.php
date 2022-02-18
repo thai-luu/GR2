@@ -62,8 +62,14 @@ class UserController extends Controller
         $input['salt'] = md5(Str::random());
         $input['name'] = trim($input['name']);
         $name = $this->userRepository->findByField('name',$input['name']);
-        if(isset($name)){
+        $email = $this->userRepository->findByField('email',$input['email']);
+      
+        if(isset($name[0]->name)){
             Flash::error('User name bị trùng mời bạn nhập lại.');
+        return redirect(route('user.create'));
+        }
+        if(isset($email[0]->email)){
+            Flash::error('User email bị trùng mời bạn nhập lại.');
         return redirect(route('user.create'));
         }
         $input['algorithm'] = 'sha1';
@@ -120,6 +126,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = $this->userRepository->find($id);
+        dd($user);
         if (empty($user)) {
             Flash::error('user not found');
 

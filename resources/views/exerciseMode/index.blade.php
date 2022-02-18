@@ -34,13 +34,13 @@
                 </form>
 
                 <div id="table" class="table-responsive">
-                    @include('food.table')
+                    @include('exerciseMode.table')
                 </div>
             </div>
 
             <div class="raw">
                 <h1>
-                    <a class="btn btn-primary primaryt" style="background-color:#E43F7E; color:#fff; margin-top: -9px;margin-bottom: 5px" href="{{ route('food.create') }}">Thêm mới</a>
+                    <a class="btn btn-primary primaryt" style="background-color:#E43F7E; color:#fff; margin-top: -9px;margin-bottom: 5px" href="{{ route('exerciseMode.create') }}">Thêm mới</a>
                     <a class="btn btn-success" style="margin-top: -10px;margin-bottom: 5px;" id="cmdDisplay">Duyệt</a>
                     <a class="btn btn-info" style="margin-top: -10px;margin-bottom: 5px" id="cmdRemove">Gỡ duyệt</a>
                     <a class="btn btn-danger" style="margin-right: 5px;margin-top: -10px;margin-bottom: 5px" id="cmdDelete">Xóa</a>
@@ -56,7 +56,7 @@
 
 @push('scripts')
     <script>
-        var url = '{{route('food.index')}}';
+        var url = '{{route('exerciseMode.index')}}';
     </script>
   <script src="/js/search.js"></script>
     {{-- <script src="{{config('config.js_host')}}/js/filterTable.js?v={{VERSION}}"></script>

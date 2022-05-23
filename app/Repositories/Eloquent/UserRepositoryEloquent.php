@@ -37,25 +37,32 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         if (isset($input['per_page'])) {
             $perPage = $input['per_page'];
         }
-
         $users = app($this->model())
             ->select($select)  
             ->filter($input) 
             ->paginate(10);
         $users->setPath(route('user.index'));
+        
          if (isset($input['key'])){
           if($input['key'] == 100)
           return $users;
        else{
            foreach($users as $key => $user){
                if(strcmp($user->permissions[0]->name,$input['key']) != 0){
+                  
                unset($users[$key]);
+
                }
         }
-       
            return $users;
         }
         }
+        return $users;
+    }
+    public function querryAll(){
+        $users = app($this->model())
+        ->select('*')  
+        ->paginate(10);
         return $users;
     }
     public function login($input){

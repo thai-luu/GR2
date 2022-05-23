@@ -107,7 +107,7 @@ class FoodController extends Controller
             
             return redirect('food.index');
         }
-     
+        
         return view('food.edit',compact('food'));
     }
 
@@ -155,5 +155,7 @@ class FoodController extends Controller
         $this->foodRepository->delete($id);
         Flash::success('food deleted successfully.');
         return redirect(route('food.index'));
+    }
+    public function test(){
     }
 }

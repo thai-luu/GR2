@@ -8,6 +8,9 @@ use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 /**
  * Class User.
  *
@@ -18,6 +21,7 @@ class User extends Authenticatable
     use TransformableTrait;
     use HasRoles;
     use SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable;
     public $table = 'users';
     /**
      * The attributes that are mass assignable.
@@ -34,5 +38,8 @@ class User extends Authenticatable
     }
     public function physicalCondition(){
         return $this->belongsTo('App/Models/PhysicalCondition','physical_condition_id','id');
+    }
+    public function exerciseMode(){
+        return $this->hasOne('App/Models/ExerciseMode','user_id','id');
     }
 }

@@ -29,8 +29,9 @@
                 <td>{{ $food ? $food->name : ''}}</td>
                 <td>{{ $food ? $food->protein : ''}}</td>
                 <td>{{ $food ? $food->carb : ''}}</td>
-                <td>{{ $food ? $food->fat : 0 }}</td>
-                <td>{{ $food ? $food->vitaminA : 0 }}</td>
+                <td>{{ $food ? $food->fat : '' }}</td>
+                <td>{{ $food ? $food->Cenluloza : '' }}</td>
+                <td>{{ $food ? $food->vitaminA : '' }}</td>
                 <td>{{ $food ? $food->vitaminB : ''}}</td>
                 <td>{{ $food ? $food->natri : ''}}</td>
                 <td>{{ $food ? $food->kali : ''}}</td>

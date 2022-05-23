@@ -15,11 +15,11 @@
             <div class="box-body">
                 <form class="row" id="formFilter">
                     <div class="form-group col-md-2 s_search">
-                        <label for="">Quyền</label>
+                        <label for="">Phân loại</label>
                         <select class="form-control" name="onPage" id="onPage">
-                            <option value="2" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 2 ? 'selected':'' }}>Quản trị hệ thống</option>
-                            <option value="1" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 1 ? 'selected':'' }}>Cộng tác viên</option>
-                            <option value="0" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 0 ? 'selected':'' }}>Khách hàng</option>
+                            <option value="2" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 2 ? 'selected':'' }}>Nâng cao</option>
+                            <option value="1" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 1 ? 'selected':'' }}>Trung bình</option>
+                            <option value="0" {{ ($exercises->total()!=0 ) && $exercises[0]->onPage == 0 ? 'selected':'' }}>Tất cả</option>
                             <option value="100" {{ request()->get('onPage')== 100 ? 'selected': '' }}>Tất cả</option>
                         </select>
                     </div>

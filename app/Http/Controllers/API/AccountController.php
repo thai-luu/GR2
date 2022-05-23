@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Repositories\Eloquent\UserRepositoryEloquent;
 use Flash;
 use Illuminate\Support\Str;
-class UserController extends Controller
+class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -44,11 +44,6 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('user.create');
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -58,6 +53,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
      
+        dd($request);
         $input = $request->all();
         $input['salt'] = md5(Str::random());
         $input['name'] = trim($input['name']);

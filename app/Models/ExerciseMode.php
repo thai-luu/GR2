@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User.
- * Chế độ tập luyện
+ * Giáo án tập luyện
  * @package namespace App\Models;
  */
 class ExerciseMode extends Model
@@ -34,5 +34,8 @@ class ExerciseMode extends Model
     }
     public function physical_conditions(){
         return $this->belongsToMany('App\Models\PhysicalConditions','physical_conditions','id');
+    }
+    public function user(){
+        return $this->belongsTo('App\Models\User','user_id','id');
     }
 }

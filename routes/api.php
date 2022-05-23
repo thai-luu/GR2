@@ -17,3 +17,23 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('user/get', 'API\UserController@index');
+Route::prefix('')->group(function () {
+    
+});
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('user/login', 'API\UserController@login');
+    Route::post('user/signup', 'API\UserController@store');
+  
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::post('user/logout', 'API\AuthController@logout');
+        Route::get('user', 'API\AuthController@user');
+        Route::group(['middleware' => ['scope:*']],function(){
+            Route::get('/test','FoodController@test');
+        });
+    });
+});

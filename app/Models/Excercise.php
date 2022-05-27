@@ -33,6 +33,6 @@ class Excercise extends Model
         return $this->morphToMany('App\Models\TrainingSession', 'train_mode');
     } 
     public function level(){
-        return $this->hasOne('App\Models\Level','level_id','id');
+        return $this->belongsTo('App\Models\Level');
     }
 }

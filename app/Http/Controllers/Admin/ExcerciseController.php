@@ -15,7 +15,7 @@ class ExcerciseController extends Controller
      */
     public function index()
     {
-        return Excercise::all();
+        return Excercise::all()->load('level');
     }
 
     /**

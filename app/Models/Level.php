@@ -25,7 +25,7 @@ class Level extends Model
      */
     public $timestamps = TRUE;
     public function exercise(){
-        return $this->belongsTo('App\Models\Exercise','level_id','id');
+        return $this->hasMany('App\Models\Exercise');
     }
 
 }

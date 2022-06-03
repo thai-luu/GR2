@@ -4,16 +4,14 @@ namespace App\Repositories\Eloquent;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Contracts\Repositories\UserRepository;
-use App\Models\TrainingSession;
-use App\Validators\FoodModeValidator;
+use App\Models\Target;
 
 /**
  * 
  *
  * @package namespace App\Repositories\Eloquent;
  */
-class TrainingSessionRepositoryEloquent extends BaseRepository
+class TargetRepositoryEloquent extends BaseRepository
 {
     /**
      * Specify Model class name
@@ -22,7 +20,7 @@ class TrainingSessionRepositoryEloquent extends BaseRepository
      */
     public function model()
     {
-        return TrainingSession::class;
+        return Target::class;
     }
     /**
      * Boot up the repository, pushing criteria

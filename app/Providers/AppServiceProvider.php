@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Providers\TelescopeServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
     {
         
         $this->app->register(RepositoryServiceProvider::class);
+        if ($this->app->isLocal()) {
+            $this->app->register(TelescopeServiceProvider::class);
+            }
     }
 
     /**

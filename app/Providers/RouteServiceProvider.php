@@ -51,6 +51,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+        Route::model('training_session', 'App\Models\TrainingSession');
     }
 
     /**

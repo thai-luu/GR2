@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
  * Một bài tập
  * @package namespace App\Models;
  */
-class Excercise extends Model
+class Exercise extends Model
 {
     use TransformableTrait;
    
@@ -30,7 +30,7 @@ class Excercise extends Model
     }
     public function trainingSession()
     {
-        return $this->morphToMany('App\Models\TrainingSession', 'train_mode');
+        return $this->belongsToMany('App\Models\TrainingSession', 'train_modes');
     } 
     public function level(){
         return $this->belongsTo('App\Models\Level');

@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
 
 /**
- * Class User.
- * Bữa ăn
+ * Class Diet.
+ * Chế độ ăn 
  * @package namespace App\Models;
  */
-class User extends Model 
+class Diet extends Model 
 {
     use TransformableTrait;
    
@@ -24,6 +22,15 @@ class User extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['food','vegetable','fruit','diet_mode_id'];
+    protected $fillable = ['name','protein','cenluloza','carb','fat','mode_id'];
+    public function mode()
+    {
+        return $this->morphedByMany('App\Mode', 'dietable');
+    }
+
+    public function target()
+    {
+        return $this->morphedByMany('App\Target', 'taggdietableable');
+    }
 
 }

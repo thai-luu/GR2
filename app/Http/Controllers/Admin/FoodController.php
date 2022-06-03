@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Excercise;
-use App\Http\Requests\Exercise\StoreExerciseRequest;
-class ExcerciseController extends Controller
+
+class FoodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class ExcerciseController extends Controller
      */
     public function index()
     {
-        return Excercise::all()->load('level');
+        //
     }
 
     /**
@@ -34,9 +33,9 @@ class ExcerciseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreExerciseRequest $request)
+    public function store(Request $request)
     {
-        Excercise::insert($request->all());
+        //
     }
 
     /**

@@ -35,4 +35,8 @@ class Mode extends Model
     public function exerciseMode(){
         return $this->hasMany('Apps\Models\ExerciseMode','mode_id','id');
     }
+    public function diet()
+    {
+        return $this->morphToMany('App\Models\Diet', 'dietable');
+    }
 }

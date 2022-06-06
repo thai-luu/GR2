@@ -24,6 +24,9 @@ class Food extends Model
      * @var array
      */
     public $timestamps = FALSE;
-    protected $fillable = ['name','carb','protein','fat','cenluloza','vitaminA','vitaminB','natri','kali','classify','calo'];
-
+    protected $fillable = ['name','carb','protein','fat','cenluloza','vitaminA','vitaminB','natri','kali','classify_id','calo'];
+    public function classify()
+    {
+        return $this->belongsTo('App\Models\Classify', 'classify_id','id');
+    }
 }

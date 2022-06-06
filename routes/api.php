@@ -37,3 +37,7 @@ Route::group([
         });
     });
 });
+Route::resource('classify', 'ClassifyController');
+Route::resource('mode', 'ModeController');
+Route::resource('target', 'TargetController');
+Route::get('exercise-mode', 'ExcerciseModeController@index');

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Repositories\Eloquent\FoodRepositoryEloquent;
+use App\Models\Food;
 class FoodController extends Controller
 {
     /**
@@ -12,9 +13,14 @@ class FoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $foodRepo;
+    public function __construct(FoodRepositoryEloquent $foodRepo){
+        $this->foodRepo = $foodRepo;
+
+    }
     public function index()
     {
-        //
+        return $this->foodRepo->all();
     }
 
     /**
@@ -35,7 +41,7 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->foodRepo->create($request->all());
     }
 
     /**
@@ -44,9 +50,9 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Food $food)
     {
-        //
+        return $food->load('classify');
     }
 
     /**
@@ -67,9 +73,9 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Food $food)
     {
-        //
+        return $this->foodRepo->update($request->all(),$food->id);
     }
 
     /**

@@ -42,4 +42,7 @@ class User extends Authenticatable
     public function exerciseMode(){
         return $this->hasOne('App/Models/ExerciseMode','user_id','id');
     }
+    public function diet(){
+        return $this->hasMany('App/Models/Diet','user_id','id');
+    }
 }

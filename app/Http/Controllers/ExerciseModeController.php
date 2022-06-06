@@ -13,30 +13,16 @@ class ExerciseModeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $exerciseModeRepository;
+    private $exModeRepo;
     
-    public function __construct(ExerciseModeRepositoryEloquent $exerciseModeRepository){
-        $this->exerciseModeRepository = $exerciseModeRepository;
+    public function __construct(ExerciseModeRepositoryEloquent $exModeRepo){
+        $this->exModeRepo = $exModeRepo;
 
     }
     public function index(Request $request)
     {
-        $currentUrl = url()->previous();
-        if (strpos($currentUrl, 'create') !== false) {
-            $dataRequest['onPage'] = 1;
-        }
-        else {
-            $dataRequest = $request->all();
-        }
-
-        $exerciseModes = $this->exerciseModeRepository->queryDataAll($dataRequest);
-
-        if ($request->ajax()) {
-            return view('exerciseMode.table', compact('exerciseModes'))->render();
-            
-        }
-
-        return view('exerciseMode.index', compact('exerciseModes'));
+        return $this->exModeRepo->findByField('user_id',0);
+        
     }
 
     /**
@@ -46,7 +32,6 @@ class ExerciseModeController extends Controller
      */
     public function create()
     {
-        return view('exerciseMode.create');
     }
 
     /**
@@ -58,42 +43,6 @@ class ExerciseModeController extends Controller
     public function store(Request $request)
     {
      
-        $input = $request->all();
-        $input['salt'] = md5(Str::random());
-        $input['name'] = trim($input['name']);
-        $input['algorithm'] = 'sha1';
-        $input['password'] = sha1($input['salt'] . e(trim($input['password'])));
-        $exercises = $this->exerciseModeRepository->create($input);
-        if($request->input('permissions') == null) {
-            $permissionNames = [];
-        }
-        else {
-            $permissionNames = $request->input('permissions');
-        }
-        $exercises->givePermissionTo($permissionNames);
-        Flash::success('Thêm mới exercise thành công.');
-        return redirect(route('exercise.index'));
-    }
-    public function getLogin(){
-        return view('welcome');
-    }
-    
-    public function postLogin(Request $request)
-    {
-       
-            $data = $this->exerciseRepository->login($request->all());
-            if ($data) {
-                
-                $request->session()->regenerateToken();
-                session()->flash('success', trans('message.login_success'));
-               // activity()->log('exercise ' . auth()->exercise()->exercisename . ' was log in');
-            } else {
-                session()->flash('error', trans('message.login_fail'));
-                return redirect()->back();
-            }
-
-     
-        return redirect('/home');
     }
     /**
      * Display the specified resource.

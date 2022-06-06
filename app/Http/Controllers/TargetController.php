@@ -1,21 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Mode;
-
-class ModeController extends Controller
+use App\Models\Target;
+use App\Repositories\Eloquent\TargetRepositoryEloquent;
+class TargetController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    private $targetRepo;
+    
+    public function __construct(TargetRepositoryEloquent $targetRepo){
+        $this->targetRepo = $targetRepo;
+
+    }
     public function index()
     {
-        return Mode::all();
+        return $this->targetRepo->all();
     }
 
     /**

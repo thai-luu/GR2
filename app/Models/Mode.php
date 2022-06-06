@@ -37,6 +37,6 @@ class Mode extends Model
     }
     public function diet()
     {
-        return $this->morphToMany('App\Models\Diet', 'dietable');
+        return $this->hasMany('App\Models\Diet', 'mode_id','id');
     }
 }

@@ -12,6 +12,6 @@ class Target extends Model
     public $table = 'targets';
     public function diet()
     {
-        return $this->morphToMany('App\Models\Diet', 'dietable');
+        return $this->hasMany('App\Models\Diet', 'target_id','id');
     }
 }

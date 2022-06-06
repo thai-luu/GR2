@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Repositores\Eloquent\DietRepositoryEloquent;
+use App\Repositories\Eloquent\DietRepositoryEloquent;
+use App\Models\Diet;
 class DietController extends Controller
 {
     /**
@@ -20,7 +21,7 @@ class DietController extends Controller
     }
     public function index()
     {
-        return $this->dietRepo->all();
+        return $this->dietRepo->findByField('user_id',0)->load(['mode','target']);
     }
 
     /**
@@ -41,7 +42,9 @@ class DietController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $input['user_id'] = 0;
+        return $this->dietRepo->create($input->all());
     }
 
     /**
@@ -50,9 +53,9 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Diet $diet)
     {
-        //
+        return $diet;
     }
 
     /**
@@ -73,9 +76,11 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Diet $diet)
     {
-        //
+        $input = $request->all();
+        $input['user_id'] = 0;
+        return $this->dietRepo->update($input->all(),$diet->id);
     }
 
     /**
@@ -84,8 +89,8 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Diet $diet)
     {
-        //
+        $this->dietRepo->delete($diet->id);
     }
 }

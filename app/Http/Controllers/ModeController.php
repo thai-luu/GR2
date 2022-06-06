@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\ModeRepositoryEloquent;
-use Flash;
-use Illuminate\Support\Str;
-use Laracasts\Flash\Flash as FlashFlash;
+use App\Models\Mode;
 
 class ModeController extends Controller
 {
@@ -15,30 +13,9 @@ class ModeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $modeRepository;
-    
-    public function __construct(ModeRepositoryEloquent $modeRepository){
-        $this->modeRepository = $modeRepository;
-
-    }
-    public function index(Request $request)
+    public function index()
     {
-        $currentUrl = url()->previous();
-        if (strpos($currentUrl, 'create') !== false) {
-            $dataRequest['onPage'] = 1;
-        }
-        else {
-            $dataRequest = $request->all();
-        }
-
-        $modes = $this->modeRepository->queryDataAll($dataRequest);
-
-        if ($request->ajax()) {
-            return view('mode.table', compact('modes'))->render();
-            
-        }
-
-        return view('mode.index', compact('modes'));
+        return Mode::all();
     }
 
     /**
@@ -48,8 +25,7 @@ class ModeController extends Controller
      */
     public function create()
     {
-        
-        return view('mode.create');
+        //
     }
 
     /**
@@ -60,22 +36,9 @@ class ModeController extends Controller
      */
     public function store(Request $request)
     {
-     
-        $input = $request->all();
-        
-        $input['name'] = trim($input['name']);
-        $input['protein'] = trim($input['protein']);
-        $input['carb'] = trim($input['carb']);
-        $input['fat'] = trim($input['fat']);
-        $input['cenluloza'] = trim($input['cenluloza']);
-        $input['mode_id'] = trim($input['mode_id']);
-        $modes = $this->modeRepository->create($input);
-        Flash::success('Thêm mới chế độ ăn mẫu thành công.');
-        return redirect(route('mode.index'));
+        //
     }
-   
-    
-    
+
     /**
      * Display the specified resource.
      *
@@ -84,7 +47,7 @@ class ModeController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -95,15 +58,7 @@ class ModeController extends Controller
      */
     public function edit($id)
     {
-     
-        $mode = $this->modeRepository->find($id);
-        if(!$mode){
-            Flash::error('mode not found');
-            
-            return redirect('mode.index');
-        }
-     
-        return view('mode.edit',compact('mode'));
+        //
     }
 
     /**
@@ -115,17 +70,7 @@ class ModeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        
-        $input['name'] = trim($input['name']);
-        $input['protein'] = trim($input['protein']);
-        $input['carb'] = trim($input['carb']);
-        $input['fat'] = trim($input['fat']);
-        $input['cenluloza'] = trim($input['cenluloza']);
-        $input['mode_id'] = trim($input['mode_id']);
-        $modes = $this->modeRepository->update($input,$id);
-        Flash::success('Thêm mới chế độ ăn mẫu thành công.');
-        return redirect(route('mode.index'));
+        //
     }
 
     /**
@@ -136,14 +81,6 @@ class ModeController extends Controller
      */
     public function destroy($id)
     {
-        $mode = $this->modeRepository->find($id);
-        if (empty($mode)) {
-            Flash::error('mode not found');
-
-            return redirect(route('mode.index'));
-        }
-        $this->modeRepository->delete($id);
-        Flash::success('mode deleted successfully.');
-        return redirect(route('mode.index'));
+        //
     }
 }

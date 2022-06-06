@@ -22,15 +22,19 @@ class Diet extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name','protein','cenluloza','carb','fat','mode_id'];
+    protected $fillable = ['name','protein','cenluloza','carb','fat','mode_id','user_id','target_id'];
     public function mode()
     {
-        return $this->morphedByMany('App\Mode', 'dietable');
+        return $this->belongsTo('App\Mode', 'mode_id','id');
     }
 
     public function target()
     {
-        return $this->morphedByMany('App\Target', 'taggdietableable');
+        return $this->belongsTo('App\Target', 'target_id','id');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id','id');
     }
 
 }

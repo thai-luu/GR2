@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 class AuthController extends Controller
 {
     /**
@@ -48,6 +49,8 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json($request->user()->load('permissions'));
+        $user = $request->user()->load(['permissions', 'target', 'mode', 'level']);
+
+        return UserResource::make($user);
     }
 }

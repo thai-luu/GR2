@@ -53,7 +53,6 @@ class AccountController extends Controller
     public function store(Request $request)
     {
      
-        dd($request);
         $input = $request->all();
         $input['salt'] = md5(Str::random());
         $input['name'] = trim($input['name']);

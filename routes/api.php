@@ -26,6 +26,7 @@ Route::group([
 ], function () {
     Route::post('user/login', 'API\UserController@login');
     Route::post('user/signup', 'API\UserController@store');
+    Route::put('user/{user}/update', 'API\UserController@update');
   
     Route::group([
       'middleware' => 'auth:api'
@@ -39,5 +40,7 @@ Route::group([
 });
 Route::resource('classify', 'ClassifyController');
 Route::resource('mode', 'ModeController');
-Route::resource('target', 'TargetController');
-Route::get('exercise-mode', 'ExcerciseModeController@index');
+Route::get('target', 'TargetController@index');
+Route::get('level', 'LevelController@index');
+Route::get('exercise-mode', 'ExerciseModeController@index');
+Route::get('diet', 'DietController@index');

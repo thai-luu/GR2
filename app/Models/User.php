@@ -29,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name', 'email', 'password', 'role', 'telephone', 'salt', 'algorithm'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'telephone', 'salt', 'algorithm','weight','height','mode_id','target_id', 'age', 'level_id', 'wrist'];
     public function scopeFilter($query, $input)
     {
         if (isset($input['keyword']))
@@ -44,5 +44,18 @@ class User extends Authenticatable
     }
     public function diet(){
         return $this->hasMany('App/Models/Diet','user_id','id');
+    }
+    public function meal(){
+        return $this->hasMany('App/Models/Meal','user_id','id');
+    }
+    public function mode(){
+        return $this->belongsTo(Mode::class,'mode_id','id');
+    }
+    public function target(){
+        return $this->belongsTo(Target::class,'target_id','id');
+    }
+
+    public function level(){
+        return $this->belongsTo(Level::class,'level_id','id');
     }
 }

@@ -25,16 +25,16 @@ class Diet extends Model
     protected $fillable = ['name','protein','cenluloza','carb','fat','mode_id','user_id','target_id'];
     public function mode()
     {
-        return $this->belongsTo('App\Mode', 'mode_id','id');
+        return $this->belongsTo('App\Models\Mode', 'mode_id','id');
     }
 
     public function target()
     {
-        return $this->belongsTo('App\Target', 'target_id','id');
+        return $this->belongsTo('App\Models\Target', 'target_id','id');
     }
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id','id');
+        return $this->belongsTo('App\Models\User', 'user_id','id');
     }
 
 }

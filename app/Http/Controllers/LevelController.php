@@ -4,24 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\DietRepositoryEloquent;
-use App\Models\Diet;
-class DietController extends Controller
+use App\Models\Target;
+use App\Repositories\Eloquent\LevelRepositoryEloquent;
+class LevelController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $dietRepo;
+    private $levelRepo;
     
-    public function __construct(DietRepositoryEloquent $dietRepo){
-        $this->dietRepo = $dietRepo;
+    public function __construct(LevelRepositoryEloquent $levelRepo){
+        $this->levelRepo = $levelRepo;
 
     }
     public function index()
     {
-        return $this->dietRepo->findByField('user_id',0)->load(['mode','target']);
+        return $this->levelRepo->all();
     }
 
     /**
@@ -40,6 +40,10 @@ class DietController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function store(Request $request)
+    {
+        //
+    }
 
     /**
      * Display the specified resource.
@@ -47,9 +51,9 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Diet $diet)
+    public function show($id)
     {
-        return $diet;
+        //
     }
 
     /**
@@ -58,6 +62,10 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function edit($id)
+    {
+        //
+    }
 
     /**
      * Update the specified resource in storage.
@@ -66,6 +74,10 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function update(Request $request, $id)
+    {
+        //
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -73,4 +85,8 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function destroy($id)
+    {
+        //
+    }
 }

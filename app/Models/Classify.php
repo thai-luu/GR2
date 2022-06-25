@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Classify extends Model
+class Classify extends Model //Phân loại đồ ăn(rau,thịt,củ quả)
 {
     use HasFactory;
     public $table = 'classifies';

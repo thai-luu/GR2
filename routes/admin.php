@@ -13,4 +13,5 @@ Route::group([
       Route::resource('diet', 'Admin\DietController');
       Route::resource('food', 'Admin\FoodController');
       Route::resource('classify', 'ClassifyController');
+      Route::resource('meal', 'MealController');
   });

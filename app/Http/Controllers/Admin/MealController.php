@@ -4,24 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\DietRepositoryEloquent;
-use App\Models\Diet;
-class DietController extends Controller
+use App\Models\Meal;
+use App\Repositories\Eloquent\MealRepositoryEloquent;
+class MealController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $dietRepo;
+    private $mealRepo;
     
-    public function __construct(DietRepositoryEloquent $dietRepo){
-        $this->dietRepo = $dietRepo;
-
+    public function __construct(MealRepositoryEloquent $mealRepo){
+        $this->mealRepo = $mealRepo;
     }
     public function index()
     {
-        return $this->dietRepo->findByField('user_id',0)->load(['mode','target']);
+        $this->mealRepo->all();
     }
 
     /**
@@ -43,8 +42,11 @@ class DietController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $input['user_id'] = 0;
-        return $this->dietRepo->create($input);
+        $input['meat'] = json_encode($input['meat'],true);
+        $input['vegetable'] = json_encode($input['vegetable'],true);
+        $input['fruit'] = json_encode($input['fruit']);
+        $this->mealRepo->create($input);
+
     }
 
     /**
@@ -53,9 +55,12 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Diet $diet)
+    public function show(Meal $meal)
     {
-        return $diet;
+        $meal->meat = json_decode($meal->meat);
+        $meal->vegetable = json_decode($meal->vegetable);
+        $meal->fruit = json_decode($meal->fruit);
+        return $meal;
     }
 
     /**
@@ -76,11 +81,13 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Diet $diet)
+    public function update(Request $request,Meal $meal)
     {
         $input = $request->all();
-        $input['user_id'] = 0;
-        return $this->dietRepo->update($input->all(),$diet->id);
+        $input['meat'] = json_encode($input['meat'],true);
+        $input['vegetable'] = json_encode($input['vegetable'],true);
+        $input['fruit'] = json_encode($input['fruit']);
+        $this->mealRepo->update($input,$meal->id);
     }
 
     /**
@@ -89,8 +96,8 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Diet $diet)
+    public function destroy(Meal $meal)
     {
-        $this->dietRepo->delete($diet->id);
+        $this->mealRepo->delete($meal->id);
     }
 }

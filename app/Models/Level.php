@@ -28,4 +28,8 @@ class Level extends Model
         return $this->hasMany('App\Models\Exercise');
     }
 
+    public function user(){
+        return $this->hasMany('App\Models\User', 'level_id', 'id');
+    }
+
 }

@@ -95,7 +95,6 @@ class UserController extends Controller
        
             $data = $this->userRepository->login($request->all());
             if ($data) {
-                
                 $user = $request->user();
                 if($user->permissions[0]->name == 'QTV'){
                     $tokenResult = $user->createToken('Personal Access Token',['*']);
@@ -145,9 +144,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $this->userRepository->update($request->all(),$user->id);
     }
 
     /**

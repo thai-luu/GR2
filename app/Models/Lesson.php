@@ -17,25 +17,33 @@ class Lesson extends Model
 {
     use TransformableTrait;
    
-    public $table = 'exercise_modes';
+    public $table = 'lessons';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    public $timestamps = TRUE;
-    protected $fillable = ['name','description','bmi'];
+    public $timestamps = false;
+
+    protected $fillable = ['name','desc'];
+
     public function trainingSession()
     {
-        return $this->morphToMany('App\Models\TrainingSession', 'train_mode');
+        return $this->belongsToMany('App\Models\TrainingSession', 'lesson_training', 'lesson_id', 'training_id');
     }
-    public function mode(){
-        return $this->belongsToMany('App\Models\mode','mode_id','id');
+
+    public function mode()
+    {
+        return $this->belongsToMany('App\Models\Mode', 'lesson_mode', 'lesson_id', 'mode_id');
     }
-    public function physical_conditions(){
-        return $this->belongsToMany('App\Models\PhysicalConditions','physical_conditions','id');
+
+    public function target()
+    {
+        return $this->belongsToMany('App\Models\Target', 'lesson_target', 'lesson_id', 'target_id');
     }
-    public function user(){
+
+    public function user()
+    {
         return $this->belongsTo('App\Models\User','user_id','id');
     }
 }

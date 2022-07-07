@@ -29,14 +29,22 @@ class Mode extends Model
     public function user(){
         return $this->hasMany('Apps\Models\User','mode_id','id');
     }
+
     public function physicalCondition(){
         return $this->hasMany('Apps\Models\PhysicalCondition','mode_id','id');
     }
+
     public function exerciseMode(){
         return $this->hasMany('Apps\Models\ExerciseMode','mode_id','id');
     }
+
     public function diet()
     {
         return $this->hasMany('App\Models\Diet', 'mode_id','id');
+    }
+
+    public function lesson()
+    {
+        return $this->belongsToMany('App\Models\Lesson', 'lesson_mode', 'mode_id', 'lesson_id');
     }
 }

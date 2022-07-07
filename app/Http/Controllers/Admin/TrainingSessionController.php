@@ -51,9 +51,15 @@ class TrainingSessionController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $exerciseList = $this->changeToArray($data['exerciseList']);
+        $exerciseList = $data['exerciseList'];
         unset($data['exerciseList']);
         $train_sess = $this->trainingSessionRepository->create($data);
+        $arrKey = [];
+        foreach($exerciseList as $key => &$value){
+            array_push($arrKey, $value['id']);
+            unset($value['id']);
+        }
+        $exerciseList = array_combine($arrKey, $exerciseList);
         $this->trainingSessionRepository->sync($train_sess->id,'exercise',$exerciseList);
     }
 

@@ -59,4 +59,5 @@ Route::prefix('exercise')->group(function () {
     Route::get('{exercise}', 'ExerciseController@show'); 
 });
 Route::get('training-session', 'Admin\TrainingSessionController@indexHome');
+Route::get('lesson', 'LessonController@index');
 

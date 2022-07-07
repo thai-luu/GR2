@@ -13,6 +13,6 @@ class Muscle extends Model
 
     public function exercise ()
     {
-        return $this->belongsToMany('App\Models\Exercise','exercise_muscles', 'exercise_id', 'muscle_id');
+        return $this->belongsToMany('App\Models\Exercise','exercise_muscles', 'muscle_id', 'exercise_id');
     }
 }

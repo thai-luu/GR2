@@ -37,7 +37,7 @@ class TrainingSessionRepositoryEloquent extends BaseRepository
 
         $trainingSession = app($this->model())
             ->select($select)  
-            ->paginate(5);
+            ->paginate(10);
         return $trainingSession;
     }
     public function boot()

@@ -24,7 +24,7 @@ class TrainingSession extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['desc','status'];
+    protected $fillable = ['name', 'desc', 'status'];
     public function exerciseMode()
     {
         return $this->morphedByMany('App\Models\ExerciseMode', 'train_mode');
@@ -33,5 +33,10 @@ class TrainingSession extends Model
     public function exercise()
     {
         return $this->belongsToMany('App\Models\Exercise', 'train_modes');
+    }
+
+    public function lesson()
+    {
+        return $this->belongsToMany('App\Models\Lesson', 'lesson_training', 'training_id', 'lesson_id');
     }
 }

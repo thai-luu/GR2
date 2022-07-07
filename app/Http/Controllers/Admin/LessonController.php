@@ -4,28 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\FoodRepositoryEloquent;
-use App\Models\Food;
-use App\Http\Resources\FoodResource;
+use App\Models\Lesson; 
 
-class FoodController extends Controller
+class LessonController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $foodRepo;
-    public function __construct(FoodRepositoryEloquent $foodRepo){
-        $this->foodRepo = $foodRepo;
-
-    }
-    public function index(Request $request)
+    public function index()
     {
-        $dataRequest = $request->all();
-        $foods = $this->foodRepo->queryDataAll($dataRequest);
-
-        return FoodResource::collection($foods);
+        $lesson = Lesson::all()->load(
+            ['mode', 'target'], ['trainingSession' => function ($query) {
+                $query->exercise()->orderBy('position', 'desc')->get();
+            }]
+        );
+        return $lesson;
     }
 
     /**
@@ -46,7 +41,25 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->foodRepo->create($request->all());
+        $input = $request->all();
+        $modeArr = $input['mode_id'];
+        $trainArr = $input['trainingSessions'];
+        $targetArr = $input['target_id'];
+        $arrKey = [];
+        $arrValue = [];
+        foreach($trainArr as $key => $value){
+            array_push($arrKey, $value);
+            $arrValue[]['position'] = $key + 1;
+        }
+        $trainArr = array_combine($arrKey, $arrValue);
+        unset($input['mode_id']);
+        unset($input['trainingSessions']);
+        unset($input['target_id']);
+        $lesson = Lesson::create($input);
+        $lesson->trainingSession()->sync($trainArr);
+        $lesson->mode()->sync($modeArr);
+        $lesson->target()->sync($targetArr);
+
     }
 
     /**
@@ -55,9 +68,9 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Food $food)
+    public function show($id)
     {
-        return $food->load('classify');
+        //
     }
 
     /**
@@ -78,9 +91,9 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Food $food)
+    public function update(Request $request, $id)
     {
-        return $this->foodRepo->update($request->all(),$food->id);
+        //
     }
 
     /**

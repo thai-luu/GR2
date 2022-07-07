@@ -18,4 +18,9 @@ class Target extends Model // Mục tiêu
     {
         return $this->hasMany('App\Models\User', 'target_id','id');
     }
+
+    public function lesson()
+    {
+        return $this->belongsToMany('App\Models\Lesson', 'lesson_target', 'target_id', 'lesson_id');
+    }
 }

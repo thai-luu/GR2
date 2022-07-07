@@ -22,6 +22,10 @@ class HistoryMeal extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['food','vegetable','fruit','diet_mode_id'];
+    protected $fillable = ['meal_id','workout_id','calories_in','calories_out'];
 
+    public function meal()
+    {
+        $this->belongsTo('App\Models\Meal', 'meal_id');
+    }
 }

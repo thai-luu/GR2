@@ -36,11 +36,27 @@ Route::group([
         Route::group(['middleware' => ['scope:*']],function(){
             Route::get('/test','FoodController@test');
         });
+        Route::resource('meal', 'MealController');
     });
 });
+Route::group([
+    'middleware' => 'auth:api'
+  ], function() {
+      Route::get('{id}/meal', 'MealController@index');
+      Route::get('exercise', 'ExerciseController@index');
+  });
 Route::resource('classify', 'ClassifyController');
 Route::resource('mode', 'ModeController');
 Route::get('target', 'TargetController@index');
 Route::get('level', 'LevelController@index');
 Route::get('exercise-mode', 'ExerciseModeController@index');
 Route::get('diet', 'DietController@index');
+Route::get('food','FoodController@index');
+Route::get('exercise-category', 'ExerciseCategoryController@index');
+Route::get('muscles', 'MuscleController@index');
+Route::prefix('exercise')->group(function () {
+    Route::get('get-system-exercise-by-muscle', 'ExerciseController@getSystemExerciseByMuscle');
+    Route::get('{exercise}', 'ExerciseController@show'); 
+});
+Route::get('training-session', 'Admin\TrainingSessionController@indexHome');
+

@@ -1,26 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Meal;
-use App\Repositories\Eloquent\MealRepositoryEloquent;
+use App\Repositories\Eloquent\ExerciseRepositoryEloquent;
 
-class MealExampleController extends Controller
+class ExerciseController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $mealRepo;
+    private $exerRepo;
     
-    public function __construct(MealRepositoryEloquent $mealRepo){
-        $this->mealRepo = $mealRepo;
+    public function __construct(ExerciseRepositoryEloquent $exerRepo){
+        $this->exerRepo = $exerRepo;
+
     }
-    public function index()
+
+    public function index(Request $request)
     {
-        return $this->mealRepo->findByField('user_id',0);
+        
     }
 
     /**
@@ -50,12 +52,9 @@ class MealExampleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Meal $meal)
+    public function show($id)
     {
-        $meal->meat = json_decode($meal->meat);
-        $meal->vegetable = json_decode($meal->vegetable);
-        $meal->fruit = json_decode($meal->fruit);
-        return $meal;
+        //
     }
 
     /**

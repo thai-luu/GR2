@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use App\Repositories\Eloquent\ExerciseRepositoryEloquent;
 use Flash;
 use Illuminate\Support\Str;
+use App\Models\Exercise;
+use App\Models\Muscle;
+use App\Http\Resources\ExerciseResource;
+use App\Http\Resources\ExerciseSystemResource;
+use App\Models\Level;
+
 class ExerciseController extends Controller
 {
     /**
@@ -21,22 +27,15 @@ class ExerciseController extends Controller
     }
     public function index(Request $request)
     {
-        $currentUrl = url()->previous();
-        if (strpos($currentUrl, 'create') !== false) {
-            $dataRequest['onPage'] = 1;
-        }
-        else {
-            $dataRequest = $request->all();
-        }
+        $exercises = Exercise::all()->load(['muscle', 'exerciseCategory', 'level']);
+        
+        return ExerciseResource::collection($exercises);
+    }
 
-        $exercises = $this->exerciseRepository->queryDataAll($dataRequest);
-
-        if ($request->ajax()) {
-            return view('exercise.table', compact('exercises'))->render();
-            
-        }
-
-        return view('exercise.index', compact('exercises'));
+    public function show(Exercise $exercise)
+    {
+        
+        return ExerciseResource::make($exercise);
     }
 
     /**
@@ -44,74 +43,10 @@ class ExerciseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getSystemExerciseByMuscle()
     {
-        return view('exercise.create');
-    }
+        $exercises = Muscle::all()->load(['exercise.level', 'exercise.muscle']);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-     
-        $input = $request->all();
-        
-        $input['name'] = trim($input['name']);
-        $input['time'] = trim($input['time']);
-        $input['note'] = trim($input['note']);
-        $input['calories'] = trim($input['calories']);
-        $input['linkVd'] = trim($input['linkVd']);
-        $exercises = $this->exerciseRepository->create($input);
-        Flash::success('Thêm mới exercise thành công.');
-        return redirect(route('exercise.index'));
-    }
-   
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return ExerciseSystemResource::collection($exercises);
     }
 }

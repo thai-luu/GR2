@@ -24,7 +24,7 @@ class Exercise extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name','time','note','calories','linkVd'];
+    protected $fillable = ['name', 'time', 'note', 'calories', 'linkVd', 'movement', 'exercise_categories_id'];
     public function partmini(){
         return $this->belongsToMany('App\Models\PartMini','id','id');
     }
@@ -34,5 +34,15 @@ class Exercise extends Model
     } 
     public function level(){
         return $this->belongsTo('App\Models\Level');
+    }
+
+    public function exerciseCategory() 
+    {
+        return $this->belongsTo('App\Models\ExerciseCategory','exercise_categories_id','id');
+    }
+
+    public function muscle ()
+    {
+        return $this->belongsToMany('App\Models\Muscle','exercise_muscles', 'exercise_id', 'muscle_id');
     }
 }

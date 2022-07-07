@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
  * Giáo án tập luyện
  * @package namespace App\Models;
  */
-class ExerciseMode extends Model
+class Lesson extends Model
 {
     use TransformableTrait;
    

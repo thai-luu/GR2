@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Eloquent\TrainingSessionRepositoryEloquent;
 use App\Models\TrainingSession;
+use App\Http\Resources\TrainingSessionResource;
+
 class TrainingSessionController extends Controller
 {
     /**
@@ -23,6 +25,11 @@ class TrainingSessionController extends Controller
     {
         $dataRequest = $request->all();
         return $this->trainingSessionRepository->queryDataAll($dataRequest);
+    }
+
+    public function indexHome()
+    {
+        return TrainingSessionResource::collection(TrainingSession::where('status', 1)->get());
     }
 
     /**

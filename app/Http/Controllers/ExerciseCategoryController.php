@@ -3,31 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\FoodRepositoryEloquent;
-use Flash;
-use Illuminate\Support\Str;
-use Laracasts\Flash\Flash as FlashFlash;
-use App\Http\Resources\FoodResource;
+use App\Models\ExerciseCategory;
+use App\Http\Resources\ExerciseCategoryResource;
 
-class FoodController extends Controller
+class ExerciseCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $foodRepository;
-    
-    public function __construct(FoodRepositoryEloquent $foodRepository){
-        $this->foodRepository = $foodRepository;
-
-    }
-    
-    public function index() 
+    public function index()
     {
-        $foods = $this->foodRepository->all();
-
-        return FoodResource::collection($foods);
+        $exercises = ExerciseCategory::all();
+        
+        return ExerciseCategoryResource::collection($exercises);
     }
 
     /**
@@ -37,8 +27,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        
-        return view('food.create');
+        //
     }
 
     /**
@@ -49,12 +38,9 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-     
-        
+        //
     }
-   
-    
-    
+
     /**
      * Display the specified resource.
      *
@@ -74,8 +60,7 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-     
-       
+        //
     }
 
     /**
@@ -87,7 +72,7 @@ class FoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //
     }
 
     /**
@@ -98,8 +83,6 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-
-    }
-    public function test(){
+        //
     }
 }

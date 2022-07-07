@@ -15,9 +15,13 @@ class Meal extends Model
      * @var array
      */
 
-    protected $fillable = ['meat','vegetable','fruit','user_id','history_use'];
+    protected $fillable = ['meat','vegetable','fruit','user_id','history_use', 'day_use', 'time_in_day', 'calories'];
     public $timestamps = TRUE;
     public function user(){
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function historyMeal(){
+        return $this->hasOne('App\Models\HistoryMeal', 'meal_id');
     }
 }

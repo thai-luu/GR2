@@ -21,7 +21,7 @@ class DietController extends Controller
     }
     public function index()
     {
-        return $this->dietRepo->findByField('user_id',0)->load(['mode','target']);
+        return $this->dietRepo->load(['mode','target']);
     }
 
     /**

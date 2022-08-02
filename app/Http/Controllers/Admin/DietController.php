@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Eloquent\DietRepositoryEloquent;
 use App\Models\Diet;
+use App\Http\Requests\Diet\CreateDietRequest;
+
 class DietController extends Controller
 {
     /**
@@ -21,7 +23,7 @@ class DietController extends Controller
     }
     public function index()
     {
-        return $this->dietRepo->findByField('user_id',0)->load(['mode','target']);
+        return $this->dietRepo->all()->load(['mode','target']);
     }
 
     /**
@@ -40,10 +42,10 @@ class DietController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateDietRequest $request)
     {
         $input = $request->all();
-        $input['user_id'] = 0;
+        // $input['user_id'] = 0;
         return $this->dietRepo->create($input);
     }
 
@@ -79,7 +81,7 @@ class DietController extends Controller
     public function update(Request $request, Diet $diet)
     {
         $input = $request->all();
-        $input['user_id'] = 0;
+        // $input['user_id'] = 0;
         return $this->dietRepo->update($input->all(),$diet->id);
     }
 

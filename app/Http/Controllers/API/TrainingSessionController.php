@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Eloquent\TrainingSessionRepositoryEloquent;
 use App\Models\TrainingSession;
+use App\Repositories\Eloquent\TrainingSessionRepositoryEloquent;
 use App\Http\Resources\TrainingSession\TrainingSessionResource;
 
 class TrainingSessionController extends Controller
@@ -21,15 +21,13 @@ class TrainingSessionController extends Controller
         $this->trainingSessionRepository = $trainingSessionRepository;
 
     }
+
     public function index(Request $request)
     {
-        $dataRequest = $request->all();
-        return $this->trainingSessionRepository->queryDataAll($dataRequest);
-    }
-
-    public function indexHome()
-    {
-        return TrainingSessionResource::collection(TrainingSession::where('status', 1)->get());
+        $user = $request->user()->id;
+        $train_sessList = TrainingSession::where('user_id', $user)->with('exercise.exerciseCategory')->paginate(10);
+        
+        return TrainingSessionResource::collection($train_sessList);
     }
 
     /**
@@ -51,14 +49,20 @@ class TrainingSessionController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $exerciseList = $data['exerciseList'];
-        unset($data['exerciseList']);
+        $user = $request->user()->id;
+        $exerciseList = $data['exercises']; 
+        $data['user_id'] = $user;
+        $data['status'] = 0;     
+        unset($data['exercises']);
         $train_sess = $this->trainingSessionRepository->create($data);
         $arrKey = [];
+        $arrInsertKey = ['sets', 'time'];
         foreach($exerciseList as $key => &$value){
             array_push($arrKey, $value['id']);
-            unset($value['id']);
+            $value['sets'] = json_encode($value['sets']);
+            $value = array_intersect_key($value, array_flip($arrInsertKey));
         }
+        
         $exerciseList = array_combine($arrKey, $exerciseList);
         $this->trainingSessionRepository->sync($train_sess->id,'exercise',$exerciseList);
     }
@@ -69,10 +73,9 @@ class TrainingSessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TrainingSession $train_sess)
+    public function show($id)
     {
-        $training = $train_sess->load('exercise');
-        return $training;
+        //
     }
 
     /**
@@ -81,8 +84,9 @@ class TrainingSessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(TrainingSession $train_sess)
+    public function edit($id)
     {
+        //
     }
 
     /**
@@ -92,13 +96,9 @@ class TrainingSessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TrainingSession $train_sess, Request $request)
+    public function update(Request $request, $id)
     {
-        $data = $request->all();
-        $exerciseList = $this->changeToArray($data['exercise']);
-        unset($data['exercise']);
-        $train_sess->update($data);
-        $this->trainingSessionRepository->sync($train_sess->id,'exercise',$exerciseList);
+        //
     }
 
     /**
@@ -110,12 +110,5 @@ class TrainingSessionController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function changeToArray($exerciseList){
-         $data = array();
-         foreach($exerciseList as $key => $value){
-             array_push($data,$value['id']);
-         }
-         return $data;
     }
 }

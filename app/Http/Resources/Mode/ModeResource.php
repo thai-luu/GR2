@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Mode;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TrainingSessionResource extends JsonResource
+class ModeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,7 @@ class TrainingSessionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'desc' => $this->desc
+            'name' => $this->name
         ];
     }
 }

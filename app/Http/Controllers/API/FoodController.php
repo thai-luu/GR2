@@ -1,21 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Classify;
-use App\Http\Resources\ClassifyResource;
+use App\Models\Food;
+use App\Http\Resources\FoodResource;
 
-class ClassifyController extends Controller
+class FoodController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ClassifyResource::collection(Classify::all());
+        $user = $request->user()->id;
+        $foods = Food::where('user_id', $user)->with('classify')->paginate(15);
+
+        return FoodResource::collection($foods);
     }
 
     /**
@@ -36,7 +40,11 @@ class ClassifyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $input['status'] = 0;
+        $input['user_id'] = $request->user()->id;
+
+        return Food::create($input);
     }
 
     /**

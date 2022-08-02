@@ -28,6 +28,7 @@ class FoodResource extends JsonResource
             'classify_id' => $this->classify_id,
             'calo' => $this->calo,
             'serving' => 0,
+            'classify' => $this->whenLoaded('classify')
             
         ];
     }

@@ -32,7 +32,7 @@ class TrainingSession extends Model
 
     public function exercise()
     {
-        return $this->belongsToMany('App\Models\Exercise', 'train_modes');
+        return $this->belongsToMany('App\Models\Exercise', 'train_modes')->withPivot('sets','time');
     }
 
     public function lesson()

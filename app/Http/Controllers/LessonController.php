@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lesson; 
+use App\Models\Level;
 
 class LessonController extends Controller
 {
@@ -12,14 +13,20 @@ class LessonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lesson = Lesson::with(
-            ['mode', 'target','trainingSession' => function ($query) {
+        $level = $request->input('level');
+        if(isset($level))
+        $lessonByLevel = Level::find($level);
+        else
+        $lessonByLevel = new Level;
+        $lessonByLevel = $lessonByLevel->with(
+            ['lesson.trainingSession' => function ($query) {
                 $query->orderBy('position', 'asc');
-            }, 'trainingSession.exercise' ]
+            }, 'lesson.trainingSession.exercise' ]
         )->get();
-        return $lesson;
+
+        return $lessonByLevel;
     }
 
     /**

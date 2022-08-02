@@ -32,4 +32,8 @@ class Level extends Model
         return $this->hasMany('App\Models\User', 'level_id', 'id');
     }
 
+    public function lesson(){
+        return $this->belongsToMany('App\Models\Lesson','lesson_level', 'level_id', 'lesson_id');
+    }
+
 }

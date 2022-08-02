@@ -23,11 +23,15 @@ class FoodController extends Controller
     public function index(Request $request)
     {
         $dataRequest = $request->all();
-        $foods = $this->foodRepo->queryDataAll($dataRequest);
+        $foods = $this->foodRepo->where('status', 1)->queryDataAll($dataRequest);
 
         return FoodResource::collection($foods);
     }
 
+    // public function indexAll(Request $request)
+    // {
+    //     $foods = Food::where('status', 1)->where()
+    // }
     /**
      * Show the form for creating a new resource.
      *
@@ -46,7 +50,10 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->foodRepo->create($request->all());
+        $input = $request->all();
+        $input['status'] = 1;
+        $input['user_id'] = $request->user()->id;
+        return $this->foodRepo->create($input);
     }
 
     /**

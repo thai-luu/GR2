@@ -58,4 +58,8 @@ class User extends Authenticatable
     public function level(){
         return $this->belongsTo(Level::class,'level_id','id');
     }
+
+    public function food(){
+        return $this->hasMany(Food::class, 'user_id', 'id');
+    }
 }

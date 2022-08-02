@@ -22,7 +22,7 @@ class Diet extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name','protein','cenluloza','carb','fat','mode_id','user_id','target_id'];
+    protected $fillable = ['name','protein','cenluloza','carb','fat','mode_id','user_id','target_id', 'range'];
     public function mode()
     {
         return $this->belongsTo('App\Models\Mode', 'mode_id','id');
@@ -32,9 +32,9 @@ class Diet extends Model
     {
         return $this->belongsTo('App\Models\Target', 'target_id','id');
     }
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User', 'user_id','id');
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo('App\Models\User', 'user_id','id');
+    // }
 
 }

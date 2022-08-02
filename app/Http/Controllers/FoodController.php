@@ -26,9 +26,14 @@ class FoodController extends Controller
     public function index(Request $request) 
     {
         $dataRequest = $request->all();
-        $foods = $this->foodRepository->queryDataAll($dataRequest);
+        $foods = $this->foodRepository->queryDataAll($dataRequest)->load('classify');
 
         return FoodResource::collection($foods);
+    }
+
+    public function getBeforeLogin()
+    {
+
     }
 
     /**
@@ -50,7 +55,6 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-     
         
     }
    

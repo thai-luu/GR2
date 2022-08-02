@@ -1,21 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Classify;
-use App\Http\Resources\ClassifyResource;
+use App\Models\Meal;
+use App\Http\Resources\MealResource;
 
-class ClassifyController extends Controller
+class MealController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ClassifyResource::collection(Classify::all());
+        $id = $request->user()->id;
+        $dayUse = $request->input('day_use');
+        $meal = Meal::where('user_id',$id)
+            ->whereDate('day_use', $dayUse)
+            ->take(1)
+            ->get();
+
+        return MealResource::collection($meal);
     }
 
     /**
@@ -36,7 +44,18 @@ class ClassifyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $day_use = $data['day_use'];
+        $data['user_id'] = $request->user()->id;
+        $data['breakfast'] = json_encode($data['breakfast']);
+        $data['dinner'] = json_encode($data['dinner']);
+        $data['lunch'] = json_encode($data['lunch']);
+        $data['snacks'] = json_encode($data['snacks']);
+        $data['training'] = json_encode($data['training']);
+        $meal = Meal::updateOrCreate(
+            ['day_use' => $day_use, 'user_id' => $data['user_id']],
+            $data
+        );
     }
 
     /**

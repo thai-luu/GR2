@@ -16,10 +16,11 @@ class MealResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'breakfast' => json_decode($this->breakfast),
-            'lunch' => json_decode($this->lunch),
-            'dinner' => json_decode($this->dinner),
-            'snacks' => json_decode($this->snacks),
+            'breakfast' => json_decode($this->breakfast, true),
+            'lunch' => json_decode($this->lunch, true),
+            'dinner' => json_decode($this->dinner, true),
+            'snacks' => json_decode($this->snacks, true),
+            'training' => json_decode($this->training, true),
             'calories' => $this->calories,
             'mode' => $this->mode,
             'user_id' => $this->user_id,

@@ -22,8 +22,8 @@ class FoodController extends Controller
     }
     public function index(Request $request)
     {
-        $dataRequest = $request->all();
-        $foods = $this->foodRepo->where('status', 1)->queryDataAll($dataRequest);
+
+        $foods = Food::where('status', 1)->with('classify')->paginate(10);
 
         return FoodResource::collection($foods);
     }

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\Exercise;
 use App\Models\Muscle;
 use App\Http\Resources\ExerciseResource;
+use App\Http\Requests\Exercise\StoreExerciseRequest;
 use App\Http\Resources\ExerciseSystemResource;
 use App\Models\Level;
 
@@ -27,7 +28,7 @@ class ExerciseController extends Controller
     }
     public function index(Request $request)
     {
-        $exercises = Exercise::all()->load(['muscle', 'exerciseCategory', 'level']);
+        $exercises = Exercise::where('status', 1)->with(['muscle', 'exerciseCategory', 'level'])->get();
         
         return ExerciseResource::collection($exercises);
     }
@@ -36,6 +37,11 @@ class ExerciseController extends Controller
     {
         
         return ExerciseResource::make($exercise);
+    }
+
+    public function store(StoreExerciseRequest $request)
+    {
+        
     }
 
     /**

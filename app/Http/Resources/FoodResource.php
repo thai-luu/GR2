@@ -21,15 +21,14 @@ class FoodResource extends JsonResource
             'carb' => $this->carb,
             'fat' => $this->fat,
             'cenluloza' => $this->cenluloza,
-            'vitaminA' => $this->vitaminA,
-            'vitaminB' => $this->vitaminB,
-            'natri' => $this->natri,
-            'kali' => $this->kali,
+            'calcium' => $this->calcium,
+            'sodium' => $this->sodium,
+            'cholesteron' => $this->cholesteron,
             'classify_id' => $this->classify_id,
             'calo' => $this->calo,
             'serving' => 0,
-            'classify' => $this->whenLoaded('classify')
-            
+            'classify' => $this->whenLoaded('classify'),
+            'trans' => $this->trans,
         ];
     }
 }

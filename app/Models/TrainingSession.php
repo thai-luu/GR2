@@ -24,7 +24,7 @@ class TrainingSession extends Model
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name', 'desc', 'status'];
+    protected $fillable = ['name', 'desc', 'status', 'user_id'];
     public function exerciseMode()
     {
         return $this->morphedByMany('App\Models\ExerciseMode', 'train_mode');

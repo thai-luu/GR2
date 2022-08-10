@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -24,9 +24,15 @@ class TrainingSessionController extends Controller
 
     public function index(Request $request)
     {
-        $user = $request->user()->id;
-        $train_sessList = TrainingSession::where('user_id', $user)->with('exercise.exerciseCategory')->paginate(10);
-        
+        $train_sessList = TrainingSession::where('status', 1)->with('exercise.exerciseCategory')->paginate(10);
+
+        return TrainingSessionResource::collection($train_sessList);
+    }
+
+    public function indexProfile(Request $request)
+    {
+        $train_sessList = TrainingSession::where('status', 1)->with('exercise.exerciseCategory')->get();
+
         return TrainingSessionResource::collection($train_sessList);
     }
 
@@ -73,9 +79,9 @@ class TrainingSessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TrainingSession $trainingSession)
+    public function show($id)
     {
-        return TrainingSessionResource::make($trainingSession->load('exercise.exerciseCategory'));
+        //
     }
 
     /**

@@ -38,13 +38,13 @@ class Mode extends Model
         return $this->hasMany('Apps\Models\ExerciseMode','mode_id','id');
     }
 
-    public function diet()
-    {
-        return $this->hasMany('App\Models\Diet', 'mode_id','id');
-    }
-
     public function lesson()
     {
         return $this->belongsToMany('App\Models\Lesson', 'lesson_mode', 'mode_id', 'lesson_id');
+    }
+
+    public function target()
+    {
+        return $this->belongsToMany('App\Models\Target', 'mode_target', 'mode_id', 'target_id');
     }
 }

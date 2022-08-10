@@ -37,15 +37,18 @@ Route::group([
             Route::get('/test','FoodController@test');
         });
         Route::resource('meal', 'MealController');
+        
     });
 });
 Route::group([
     'middleware' => 'auth:api'
   ], function() {
         Route::resource('meal','API\MealController');
-        Route::get('exercise', 'ExerciseController@index');
+        Route::resource('exercise', 'API\ExerciseController');
         Route::resource('food','API\FoodController');
         Route::resource('training-session','API\TrainingSessionController');
+        Route::resource('diary', 'API\DiaryController');
+        Route::post('evaluate', 'API\EvaluateController@evaluate');
   });
 Route::get('classify', 'ClassifyController@index');
 Route::resource('mode', 'ModeController');
@@ -57,9 +60,11 @@ Route::get('beforeLogin/food','FoodController@index');
 Route::get('exercise-category', 'ExerciseCategoryController@index');
 Route::get('muscles', 'MuscleController@index');
 Route::prefix('exercise')->group(function () {
-    Route::get('get-system-exercise-by-muscle', 'ExerciseController@getSystemExerciseByMuscle');
+    Route::get('system/get-system-exercise-by-muscle', 'ExerciseController@getSystemExerciseByMuscle');
     Route::get('{exercise}', 'ExerciseController@show'); 
 });
 Route::get('beforeLogin/training-session', 'Admin\TrainingSessionController@indexHome');
 Route::get('lesson', 'LessonController@index');
+Route::get('system/training-session','TrainingSessionController@index');
+Route::get('system/training-session-profile','TrainingSessionController@indexProfile');
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Exercise;
 use App\Http\Requests\Exercise\StoreExerciseRequest;
+use App\Http\Resources\ExerciseResource;
 class ExerciseController extends Controller
 {
     /**
@@ -15,7 +16,7 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        return Exercise::all()->load('level');
+        return ExerciseResource::collection(Exercise::where('status', 1)->with(['muscle', 'exerciseCategory', 'level'])->get());
     }
 
     /**
@@ -36,7 +37,11 @@ class ExerciseController extends Controller
      */
     public function store(StoreExerciseRequest $request)
     {
-        Exercise::insert($request->all());
+        $input = $request->all();
+        $input['user_id'] = $request->user()->id;
+        $input['status'] = 1;
+        $exercise = Exercise::create($input);
+        $exercise->muscle()->sync($input['muscle']);
     }
 
     /**

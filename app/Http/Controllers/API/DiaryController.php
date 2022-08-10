@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Meal;
 use App\Http\Resources\MealResource;
 
-class MealController extends Controller
+class DiaryController extends Controller
 {
     /**
      * Display a listing of the resource.

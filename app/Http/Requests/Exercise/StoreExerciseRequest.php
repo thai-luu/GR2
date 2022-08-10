@@ -25,10 +25,10 @@ class StoreExerciseRequest extends FormRequest
     {
         return [
             'name'=> 'required|string',
-            'note'=> 'required|string',
-            'level_id' =>'required|integer',
-            'linkVd' => 'required|string',
-            'calories' => 'required|integer',
+            'note'=> 'string',
+            'level_id' =>'integer',
+            'linkVd' => 'string',
+            'rm' => 'required|integer',
         ];
     }
 }

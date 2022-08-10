@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Meal extends Model
 {
     use HasFactory;
-    public $table = 'meals';
+    public $table = 'diaries';
     /**
      * The attributes that are mass assignable.
      * Thực đơn 1 bữa

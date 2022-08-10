@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Repositories\Eloquent\ExerciseRepositoryEloquent;
+use Flash;
+use Illuminate\Support\Str;
+use App\Models\Exercise;
+use App\Models\Muscle;
+use App\Http\Resources\ExerciseResource;
+use App\Http\Requests\Exercise\StoreExerciseRequest;
+use App\Http\Resources\ExerciseSystemResource;
+use App\Models\Level;
 
 class ExerciseController extends Controller
 {
@@ -22,7 +30,10 @@ class ExerciseController extends Controller
 
     public function index(Request $request)
     {
-        
+        $userId = $request->user()->id;
+        $exercises = Exercise::where('user_id',$userId)->with(['muscle', 'exerciseCategory', 'level'])->paginate(10);
+
+        return ExerciseResource::collection($exercises);
     }
 
     /**
@@ -43,7 +54,10 @@ class ExerciseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $input['user_id'] = $request->user()->id;
+        $exercise = Exercise::create($input);
+        $exercise->muscle()->sync($input['muscle']);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lesson; 
+use App\Http\Resources\Lesson\LessonEditResource;
 
 class LessonController extends Controller
 {
@@ -68,9 +69,10 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Lesson $lesson)
     {
-        //
+        $lesson = $lesson->load('mode', 'target', 'trainingSession');
+        return LessonEditResource::make($lesson);
     }
 
     /**
@@ -91,9 +93,19 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Lesson $lesson)
     {
-        //
+        $input = $request->all();
+        $modeArr = $input['mode_id'];
+        $trainArr = $input['trainingSessions'];
+        $targetArr = $input['target_id'];
+        unset($input['mode_id']);
+        unset($input['trainingSessions']);
+        unset($input['target_id']);
+        $lesson->trainingSession()->sync($trainArr);
+        $lesson->mode()->sync($modeArr);
+        $lesson->target()->sync($targetArr);
+        $lesson->update($input);
     }
 
     /**

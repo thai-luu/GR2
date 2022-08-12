@@ -4,7 +4,7 @@ namespace App\Http\Resources\Lesson;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LessonEditResource extends JsonResource
+class LessonResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,9 +18,9 @@ class LessonEditResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'desc' => $this->desc,
-            'mode_id' => $this->whenLoaded('mode')->pluck('id'),
-            'target_id' => $this->whenLoaded('target')->pluck('id'),
-            'trainingSessions' => $this->whenLoaded('trainingSession')->pluck('id')
+            'mode_id' => $this->whenLoaded('mode'),
+            'target_id' => $this->whenLoaded('target'),
+            'trainingSessions' => $this->whenLoaded('trainingSession')
         ];
     }
 }

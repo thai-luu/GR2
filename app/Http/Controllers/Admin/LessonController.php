@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lesson; 
 use App\Http\Resources\Lesson\LessonEditResource;
-
+use App\Http\Resources\Lesson\LessonResource;
 class LessonController extends Controller
 {
     /**
@@ -16,12 +16,12 @@ class LessonController extends Controller
      */
     public function index()
     {
-        $lesson = Lesson::all()->load(
-            ['mode', 'target'], ['trainingSession' => function ($query) {
-                $query->exercise()->orderBy('position', 'desc')->get();
+        $lesson = Lesson::with(
+            ['mode', 'target', 'trainingSession' => function($query) {
+                $query->orderBy('pivot_position');
             }]
-        );
-        return $lesson;
+        )->paginate(10);
+        return LessonResource::collection($lesson);
     }
 
     /**
@@ -114,8 +114,13 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Lesson $lesson)
     {
-        //
+        $lesson->delete();
+    }
+
+    public function deleteLesson(Lesson $lesson)
+    {
+        $lesson->delete();
     }
 }

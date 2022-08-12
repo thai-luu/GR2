@@ -24,7 +24,8 @@ class TrainingSessionController extends Controller
     public function index(Request $request)
     {
         $dataRequest = $request->all();
-        return $this->trainingSessionRepository->queryDataAll($dataRequest);
+        $train_sessList =  $this->trainingSessionRepository->queryDataAll($dataRequest)->load('exercise.exerciseCategory');
+        return TrainingSessionResource::collection($train_sessList);
     }
 
     public function indexHome()
@@ -71,8 +72,8 @@ class TrainingSessionController extends Controller
      */
     public function show(TrainingSession $train_sess)
     {
-        $training = $train_sess->load('exercise');
-        return $training;
+        $training = $train_sess->load('exercise.exerciseCategory');
+        return TrainingSessionResource::make($training);
     }
 
     /**
@@ -83,6 +84,7 @@ class TrainingSessionController extends Controller
      */
     public function edit(TrainingSession $train_sess)
     {
+
     }
 
     /**
@@ -95,9 +97,20 @@ class TrainingSessionController extends Controller
     public function update(TrainingSession $train_sess, Request $request)
     {
         $data = $request->all();
-        $exerciseList = $this->changeToArray($data['exercise']);
-        unset($data['exercise']);
+        $user = $request->user()->id;
+        $exerciseList = $data['exercises']; 
+        $data['user_id'] = $user;    
+        unset($data['exercises']);
         $train_sess->update($data);
+        $arrKey = [];
+        $arrInsertKey = ['sets', 'time'];
+        foreach($exerciseList as $key => &$value){
+            array_push($arrKey, $value['id']);
+            $value['sets'] = json_encode($value['sets']);
+            $value = array_intersect_key($value, array_flip($arrInsertKey));
+        }
+        
+        $exerciseList = array_combine($arrKey, $exerciseList);
         $this->trainingSessionRepository->sync($train_sess->id,'exercise',$exerciseList);
     }
 
@@ -107,10 +120,11 @@ class TrainingSessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TrainingSession $train_sess)
     {
-        //
+        $train_sess->delete();
     }
+    
     public function changeToArray($exerciseList){
          $data = array();
          foreach($exerciseList as $key => $value){

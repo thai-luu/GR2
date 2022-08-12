@@ -47,4 +47,9 @@ class Mode extends Model
     {
         return $this->belongsToMany('App\Models\Target', 'mode_target', 'mode_id', 'target_id');
     }
+
+    public function modeTarget()
+    {
+        return $this->hasMany('App\Models\ModeTarget', 'mode_id', 'id');
+    }
 }

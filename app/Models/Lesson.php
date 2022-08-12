@@ -29,7 +29,7 @@ class Lesson extends Model
 
     public function trainingSession()
     {
-        return $this->belongsToMany('App\Models\TrainingSession', 'lesson_training', 'lesson_id', 'training_id');
+        return $this->belongsToMany('App\Models\TrainingSession', 'lesson_training', 'lesson_id', 'training_id')->withPivot('position');
     }
 
     public function mode()

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Eloquent\DietRepositoryEloquent;
 use App\Models\Diet;
 use App\Http\Requests\Diet\CreateDietRequest;
+use App\Http\Resources\Diet\DietResource;
 
 class DietController extends Controller
 {
@@ -23,7 +24,10 @@ class DietController extends Controller
     }
     public function index()
     {
-        return $this->dietRepo->all()->load(['modeTarget.mode','modeTarget.target']);
+        $diet =  $this->dietRepo->with(['modeTarget' => function($query) {
+            $query->with('mode','target');
+        }])->paginate(10);
+        return DietResource::collection($diet);
     }
 
     /**
@@ -57,7 +61,9 @@ class DietController extends Controller
      */
     public function show(Diet $diet)
     {
-        return $diet;
+        return DietResource::make($diet->load(['modeTarget' => function($query) {
+            $query->with('mode','target');
+        }]));
     }
 
     /**

@@ -20,4 +20,14 @@ class ModeTarget extends Model
     {
         return $this->belongsTo('App\Models\Diet', 'diet_id', 'id');
     }
+
+    public function mode()
+    {
+        return $this->belongsTo('App\Models\Mode', 'mode_id', 'id');
+    }
+
+    public function target()
+    {
+        return $this->belongsTo('App\Models\Target', 'target_id', 'id');
+    }
 }

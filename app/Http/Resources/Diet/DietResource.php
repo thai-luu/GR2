@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Lesson;
+namespace App\Http\Resources\Diet;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LessonEditResource extends JsonResource
+class DietResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,13 @@ class LessonEditResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'desc' => $this->desc,
-            'mode_id' => $this->whenLoaded('mode')->pluck('id'),
-            'target_id' => $this->whenLoaded('target')->pluck('id'),
-            'trainingSessions' => $this->whenLoaded('trainingSession')->pluck('id')
+            'protein' => $this->protein,
+            'cenluloza' => $this->cenluloza,
+            'carb' => $this->carb,
+            'fat' => $this->fat,
+            'range' => $this->range,
+            'trans' => $this->trans,
+            'mode_target' => $this->whenLoaded('modeTarget'),
         ];
     }
 }

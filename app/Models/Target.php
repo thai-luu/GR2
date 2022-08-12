@@ -25,4 +25,9 @@ class Target extends Model // Mục tiêu
     {
         return $this->belongsToMany('App\Models\Mode', 'mode_target', 'target_id', 'mode_id');
     }
+
+    public function modeTarget()
+    {
+        return $this->hasMany('App\Models\ModeTarget', 'target_id', 'id');
+    }
 }

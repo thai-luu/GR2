@@ -17,11 +17,11 @@ class ExerciseResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'level' => $this->whenLoaded('level'),
+            'level_id' => $this->whenLoaded('level'),
             'note' => $this->note,
             'compound' => $this->compound == 1 ? true : false ,
             'category' => $this->whenLoaded('exerciseCategory'),
-            'muscle' => $this->whenLoaded('muscle'),
+            'muscles' => $this->whenLoaded('muscle'),
             'sets' => [],
             'calories' => $this->calories,
             'linkVd' => $this->linkVd

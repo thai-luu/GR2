@@ -15,4 +15,5 @@ Route::group([
       Route::resource('classify', 'ClassifyController');
       Route::resource('meal', 'MealController');
       Route::resource('lesson', 'Admin\LessonController');
+      Route::get('lesson-delete/{id}', 'Admin\LessonController@deleteLesson');
   });

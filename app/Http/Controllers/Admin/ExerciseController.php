@@ -16,8 +16,10 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        return ExerciseResource::collection(Exercise::where('status', 1)->with(['muscle', 'exerciseCategory', 'level'])->get());
+        return ExerciseResource::collection(Exercise::where('status', 1)->with(['muscle', 'exerciseCategory', 'level'])->paginate(10));
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -41,7 +43,7 @@ class ExerciseController extends Controller
         $input['user_id'] = $request->user()->id;
         $input['status'] = 1;
         $exercise = Exercise::create($input);
-        $exercise->muscle()->sync($input['muscle']);
+        $exercise->muscle()->sync($input['muscles']);
     }
 
     /**
@@ -50,9 +52,9 @@ class ExerciseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show(Exercise $exercise)
+    {   
+        return ExerciseResource::make($exercise->load(['muscle', 'exerciseCategory', 'level']));
     }
 
     /**
@@ -73,9 +75,11 @@ class ExerciseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Exercise $exercise)
     {
-        //
+        $input = $request->all();
+        $exercise->update($input);
+        $exercise->muscle()->sync($input['muscles']);
     }
 
     /**
@@ -84,9 +88,9 @@ class ExerciseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Exercise $exercise)
     {
-        //
+        $exercise->delete();
     }
     
 }

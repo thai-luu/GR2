@@ -20,6 +20,7 @@ class ExerciseResource extends JsonResource
             'sets' => json_decode($this->pivot->sets, true),
             'time' => $this->pivot->time,
             'category' => $this->whenLoaded('exerciseCategory'),
+            'level_id' => $this->level_id
         ];
     }
 }

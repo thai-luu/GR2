@@ -15,7 +15,7 @@ class Meal extends Model
      * @var array
      */
 
-    protected $fillable = ['breakfast','lunch','dinner','user_id','snacks', 'day_use', 'time_in_day', 'calories', 'training', 'user_id'];
+    protected $fillable = ['breakfast','lunch','dinner','user_id','snacks', 'evaluate', 'day_use', 'time_in_day', 'calories', 'training', 'user_id'];
     public $timestamps = false;
     public function user(){
         return $this->belongsTo('App\Models\User');

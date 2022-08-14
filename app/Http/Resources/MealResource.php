@@ -21,6 +21,7 @@ class MealResource extends JsonResource
             'dinner' => json_decode($this->dinner, true),
             'snacks' => json_decode($this->snacks, true),
             'training' => json_decode($this->training, true),
+            'evaluate' => json_decode($this->evaluate, true),
             'calories' => $this->calories,
             'mode' => $this->mode,
             'user_id' => $this->user_id,

@@ -14,9 +14,28 @@ class ExerciseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ExerciseResource::collection(Exercise::where('status', 1)->with(['muscle', 'exerciseCategory', 'level'])->paginate(10));
+        $name = $request->input('name');
+        $category = $request->input('category');
+        $muscles = $request->input('muscles');
+        $exercise = Exercise::where('status', 1);
+        if($name){
+            $name = '%'.$name.'%';
+            $exercise->where('name', 'like', $name);
+        }
+        if($category){
+            $exercise->where('exercise_categories_id', $category);
+        }
+        if($muscles){
+            $exercise->with(['muscle' => function($query) use ($muscles) {
+                $query->whereIn('id', $muscles);
+            }])->whereHas('muscle', function($query) use($muscles) {
+                    $query->whereIn('id', $muscles);
+            });
+        }
+        $exercise = $exercise->with(['muscle', 'exerciseCategory', 'level'])->paginate(10);
+        return ExerciseResource::collection($exercise);
     }
 
     

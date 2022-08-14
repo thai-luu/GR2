@@ -24,8 +24,8 @@ class TrainingSessionController extends Controller
 
     public function index(Request $request)
     {
-        $user = $request->user()->id;
-        $train_sessList = TrainingSession::where('user_id', $user)->with('exercise.exerciseCategory')->paginate(10);
+        
+        $train_sessList =  $this->trainingSessionRepository->queryDataAll($request)->with('exercise.exerciseCategory')->paginate(10);
         
         return TrainingSessionResource::collection($train_sessList);
     }

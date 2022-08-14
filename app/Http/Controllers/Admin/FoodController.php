@@ -22,8 +22,104 @@ class FoodController extends Controller
     }
     public function index(Request $request)
     {
-
-        $foods = Food::where('status', 1)->with('classify')->paginate(10);
+        $input = $request->all();
+        $name = $request->input('name');
+        $classify = $request->input('classify');
+        $protein = $request->input('protein');
+        $carb = $request->input('carb');
+        $fat = $request->input('fat');
+        $cenluloza = $request->input('cenluloza');
+        $cholesteron = $request->input('cholesteron');
+        $foods = Food::where('status', 1);
+        if($name){
+            $name = '%'.$name.'%';
+            $foods = $foods->where('name', 'like', $name);
+        }
+        if($classify){
+            $foods = $foods->where('classify_id', $classify);
+        }
+        if($protein){
+            switch ($protein) {
+                case 1:
+                    $foods->where('protein', '<', 20);
+                    break;
+                case 2:
+                    $foods->where('protein', '>=', 20)->where('protein', '<=', 30);
+                    break;
+                case 3:
+                    $foods->where('protein', '>', 30);
+                    break;
+                default:
+                    break;
+                }
+            }
+        if($carb){
+            switch ($carb) {
+                case 1:
+                    $foods->where('carb', '<', 20);
+                    break;
+                case 2:
+                    $foods->where('carb', '>=', 20)->where('carb', '<=', 40);
+                    break;
+                case 3:
+                    $foods->where('carb', '>=', 41)->where('carb', '<=', 60);
+                    break;
+                case 4:
+                    $foods->where('carb', '>=', 61)->where('carb', '<=', 80);
+                    break;
+                case 5:
+                    $foods->where('carb', '>', 80);
+                    break;
+                default:
+                    break;
+                }
+            }
+        if($fat){
+            switch ($fat) {
+                case 1:
+                    $foods->where('fat', '<', 10);
+                    break;
+                case 2:
+                    $foods->where('fat', '>=', 10)->where('fat', '<=', 20);
+                    break;
+                case 3:
+                    $foods->where('fat', '>', 20);
+                    break;
+                default:
+                    break;
+                }
+            }
+        if($cenluloza){
+            switch ($cenluloza) {
+                case 1:
+                    $foods->where('cenluloza', '<', 10);
+                    break;
+                case 2:
+                    $foods->where('cenluloza', '>=', 10)->where('cenluloza', '<=', 20);
+                    break;
+                case 3:
+                    $foods->where('cenluloza', '>', 20);
+                    break;
+                default:
+                    break;
+                }
+            }
+        if($cholesteron){
+            switch ($cholesteron) {
+                case 1:
+                    $foods->where('cholesteron', '<', 10);
+                    break;
+                case 2:
+                    $foods->where('cholesteron', '>=', 10)->where('cholesteron', '<=', 20);
+                    break;
+                case 3:
+                    $foods->where('cholesteron', '>', 20);
+                    break;
+                default:
+                    break;
+                }
+            }
+        $foods = $foods->with('classify')->paginate(10);
 
         return FoodResource::collection($foods);
     }

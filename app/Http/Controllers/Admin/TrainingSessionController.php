@@ -23,8 +23,8 @@ class TrainingSessionController extends Controller
     }
     public function index(Request $request)
     {
-        $dataRequest = $request->all();
-        $train_sessList =  $this->trainingSessionRepository->queryDataAll($dataRequest)->load('exercise.exerciseCategory');
+        $train_sessList =  $this->trainingSessionRepository->queryDataAll($request)->with('exercise.exerciseCategory')->paginate(10);
+    
         return TrainingSessionResource::collection($train_sessList);
     }
 

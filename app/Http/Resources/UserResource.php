@@ -26,7 +26,8 @@ class UserResource extends JsonResource
             'height' => $this->height,
             'permissions' => $this->whenLoaded('permissions') ?? '',
             'level_id' => $this->whenLoaded('level') && $this->whenLoaded('level')->id ? $this->whenLoaded('level')->id : '',
-            'wrist' => $this->wrist
+            'wrist' => $this->wrist,
+            'sex' => $this->sex
         ];
     }
 }

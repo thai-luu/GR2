@@ -31,7 +31,25 @@ class ExerciseController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user()->id;
-        $exercises = Exercise::where('user_id',$userId)->with(['muscle', 'exerciseCategory', 'level'])->paginate(10);
+        $name = $request->input('name');
+        $category = $request->input('category');
+        $muscles = $request->input('muscles');
+        $exercises = Exercise::where('user_id',$userId);
+        if($name){
+            $name = '%'.$name.'%';
+            $exercises->where('name', 'like', $name);
+        }
+        if($category){
+            $exercises->where('exercise_categories_id', $category);
+        }
+        if($muscles){
+            $exercises->with(['muscle' => function($query) use ($muscles) {
+                $query->whereIn('id', $muscles);
+            }])->whereHas('muscle', function($query) use($muscles) {
+                    $query->whereIn('id', $muscles);
+            });
+        }
+        $exercises = $exercises->with(['muscle', 'exerciseCategory', 'level'])->paginate(10);
 
         return ExerciseResource::collection($exercises);
     }

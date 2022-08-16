@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Repositories\Eloquent\FoodRepositoryEloquent;
 use App\Models\Food;
 use App\Http\Resources\FoodResource;
+use App\Http\Requests\Food\StoreFoodRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 
 class FoodController extends Controller
 {
@@ -144,7 +148,7 @@ class FoodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFoodRequest $request)
     {
         $input = $request->all();
         $input['status'] = 1;
@@ -181,8 +185,10 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Food $food)
+    public function update(StoreFoodRequest $request, Food $food)
     {
+        $input = $request->all();
+        Storage::disk('public')->put('test', file_get_contents($input['image']),'public');
         return $this->foodRepo->update($request->all(),$food->id);
     }
 

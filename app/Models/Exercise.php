@@ -24,7 +24,7 @@ class Exercise extends Model
      * @var array
      */
     public $timestamps = FALSE;
-    protected $fillable = ['name', 'time', 'note', 'rm', 'status', 'linkVd','user_id', 'exercise_categories_id', 'level_id'];
+    protected $fillable = ['name', 'time', 'note', 'rm', 'status', 'linkVd','user_id', 'exercise_categories_id', 'level_id', 'compound'];
     public function partmini(){
         return $this->belongsToMany('App\Models\PartMini','id','id');
     }

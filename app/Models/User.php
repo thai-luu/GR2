@@ -29,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     public $timestamps = TRUE;
-    protected $fillable = ['name', 'email', 'password', 'role', 'telephone', 'salt', 'algorithm','weight','height','mode_id','target_id', 'age', 'level_id', 'wrist'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'sex', 'salt', 'algorithm','weight','height','mode_id','target_id', 'age', 'level_id', 'wrist', 'physical_id'];
     public function scopeFilter($query, $input)
     {
         if (isset($input['keyword']))
@@ -37,16 +37,16 @@ class User extends Authenticatable
        
     }
     public function physicalCondition(){
-        return $this->belongsTo('App/Models/PhysicalCondition','physical_condition_id','id');
+        return $this->belongsTo(PhysicalCondition::class,'physical_condition_id','id');
     }
     public function exerciseMode(){
-        return $this->hasOne('App/Models/ExerciseMode','user_id','id');
+        return $this->hasOne(ExerciseMode::class,'user_id','id');
     }
     public function diet(){
-        return $this->hasMany('App/Models/Diet','user_id','id');
+        return $this->hasMany(Diet::class,'user_id','id');
     }
     public function meal(){
-        return $this->hasMany('App/Models/Meal','user_id','id');
+        return $this->hasMany(Meal::class,'user_id','id');
     }
     public function mode(){
         return $this->belongsTo(Mode::class,'mode_id','id');

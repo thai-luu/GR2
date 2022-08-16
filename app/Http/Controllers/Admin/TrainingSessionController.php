@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Repositories\Eloquent\TrainingSessionRepositoryEloquent;
 use App\Models\TrainingSession;
 use App\Http\Resources\TrainingSession\TrainingSessionResource;
-
+use App\Http\Requests\Training\StoreTrainingSessionRequest;
+use App\Http\Requests\Training\EditTrainingSessionRequest;
 class TrainingSessionController extends Controller
 {
     /**
@@ -49,11 +50,11 @@ class TrainingSessionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTrainingSessionRequest $request)
     {
         $data = $request->all();
-        $exerciseList = $data['exerciseList'];
-        unset($data['exerciseList']);
+        $exerciseList = $data['exercises'];
+        unset($data['exercises']);
         $train_sess = $this->trainingSessionRepository->create($data);
         $arrKey = [];
         foreach($exerciseList as $key => &$value){
@@ -94,7 +95,7 @@ class TrainingSessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TrainingSession $train_sess, Request $request)
+    public function update(TrainingSession $train_sess, EditTrainingSessionRequest $request)
     {
         $data = $request->all();
         $user = $request->user()->id;

@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'middleware' => ['auth:api','scope:*'], 
+    'middleware' => [''], 
   ], function() {
       Route::resource('exercise_mode', 'Admin\ExerciseModeController');
       Route::resource('exercise', 'Admin\ExerciseController');
@@ -17,3 +17,10 @@ Route::group([
       Route::resource('lesson', 'Admin\LessonController');
       Route::get('lesson-delete/{id}', 'Admin\LessonController@deleteLesson');
   });
+Route::group([
+        'middleware' => [''], 
+    ], function() {
+        Route::resource('user', 'Admin\UserController');
+        Route::put('user-block/{user}', 'Admin\UserController@block');
+        Route::put('user-unblock/{user}', 'Admin\UserController@unBlock');
+    });

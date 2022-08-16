@@ -139,12 +139,13 @@ class EvaluateController extends Controller
                 if($exercise['category']['id'] == 1)
                     $time += $exercise['time'];
             }
+            if($overload >= 3){
+                $response['trainingLevel'] = 1;
+            }
+            if($time >= 20 && $target == 1)
+                $response['cardio'] = -1;
         }
-        if($overload >= 3){
-            $response['trainingLevel'] = 1;
-        }
-        if($time >= 20 && $target == 1)
-            $response['cardio'] = -1;
+        
         return $response;
         
     }

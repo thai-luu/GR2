@@ -68,10 +68,9 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     public function login($input){
         // dd($input);
         $user = $this->model->where('name', $input['name'])->select('salt', 'password', 'id')->first();
-        
+
         if($user){
             $password = $this->getPassword($user->salt, $input['password']);
-            // dd($password);
             if($user->password === $password){
               
                 auth()->loginUsingId($user->id);

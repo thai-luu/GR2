@@ -19,12 +19,15 @@ class LessonController extends Controller
         if(isset($level))
         $lessonByLevel = Level::find($level);
         else
-        $lessonByLevel = new Level;
-        $lessonByLevel = $lessonByLevel->with(
-            ['lesson.trainingSession' => function ($query) {
-                $query->orderBy('position', 'asc');
-            }, 'lesson.trainingSession.exercise' ]
-        )->get();
+        $lessonByLevel = Level::with(
+            ['lesson','lesson.trainingSession'])->get();
+        // $lessonByLevel = $lessonByLevel->with(
+        //     'lesson.trainingSession' 
+        //     // => function ($query) {
+        //     //     // $query->orderBy('position', 'asc');
+        //     // }, 'lesson.trainingSession.exercise' 
+            
+        // )->get();
 
         return $lessonByLevel;
     }

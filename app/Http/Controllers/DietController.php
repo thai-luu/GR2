@@ -21,7 +21,7 @@ class DietController extends Controller
     }
     public function index()
     {
-        return $this->dietRepo->load(['modeTarget.mode','modeTarget.target']);
+        return $this->dietRepo->all()->load(['modeTarget.mode','modeTarget.target']);
     }
 
     /**

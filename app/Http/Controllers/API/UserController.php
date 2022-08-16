@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use App\Http\Requests\UserCreateRequest;
 
 class UserController extends Controller
 {
@@ -55,29 +57,31 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserCreateRequest $request)
     {
         $input = $request->all();
         $input['salt'] = md5(Str::random());
         $input['name'] = trim($input['name']);
-        $name = $this->userRepository->findByField('name',$input['name']);
-        $email = $this->userRepository->findByField('email',$input['email']);
+        // $name = $this->userRepository->findByField('name',$input['name']);
+        // $email = $this->userRepository->findByField('email',$input['email']);
       
-        if(isset($name[0]->name)){
-            $message = 'User name bị trùng mời bạn nhập lại.';
-            return response()->json([
-                'message' => $message
-            ], 202);
-        }
-        if(isset($email[0]->email)){
-            $message = 'User email bị trùng mời bạn nhập lại..';
-            return response()->json([
-                'message' => $message
-            ], 202);
-        return redirect(route('user.create'));
-        }
+        // if(isset($name[0]->name)){
+        //     $message = 'User name bị trùng mời bạn nhập lại.';
+        //     return response()->json([
+        //         'message' => $message
+        //     ], 202);
+        // }
+        // if(isset($email[0]->email)){
+        //     $message = 'User email bị trùng mời bạn nhập lại..';
+        //     return response()->json([
+        //         'message' => $message
+        //     ], 202);
+        // return redirect(route('user.create'));
+        // }
         $input['algorithm'] = 'sha1';
         $input['password'] = sha1($input['salt'] . e(trim($input['password'])));
+        $input['mode_id'] = $this->checkMode($input['wrist']);
+        $input['physical_id'] = $this->checkPhysical($input['weight'], $input['height']);
         $users = $this->userRepository->create($input);
         if($request->input('permissions') == null) {
             $permissionNames = ['ND'];
@@ -146,7 +150,12 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->userRepository->update($request->all(),$user->id);
+        $input= $request->all();
+        $input['level_id'] = $input['level_id']['id'];
+        $input['target_id'] = $input['target_id']['id'];
+        $input['mode_id'] = $this->checkMode($input['wrist']);
+        $input['physical_id'] = $this->checkPhysical($input['weight'], $input['height']);
+        $this->userRepository->update($input, $user->id);
     }
 
     /**
@@ -158,5 +167,27 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function checkMode($wrist){
+        if($wrist <= 17.7){
+            return 2;
+        }
+        if($wrist > 17.7 && $wrist <= 20.3){
+            return 3;
+        }
+        if($wrist > 20.3){
+            return 1;
+        }
+    }
+
+    public function checkPhysical($weight, $height){
+        $value = $weight/pow(($height/100), 2);
+        if($value < 18.5)
+            return 1;
+        if($value >= 18.5 && $value <= 24.9)
+            return 2;
+        if($value > 24.9)
+            return 3;
     }
 }

@@ -75,7 +75,7 @@ class ExerciseController extends Controller
         $input = $request->all();
         $input['user_id'] = $request->user()->id;
         $exercise = Exercise::create($input);
-        $exercise->muscle()->sync($input['muscle']);
+        $exercise->muscle()->sync($input['muscles']);
     }
 
     /**
@@ -107,9 +107,12 @@ class ExerciseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Exercise $exercise)
     {
-        //
+        $input = $request->all();
+        $input['user_id'] = $request->user()->id;
+        $exercise->update($input);
+        $exercise->muscle()->sync($input['muscles']);
     }
 
     /**
@@ -118,8 +121,13 @@ class ExerciseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Exercise $exercise)
     {
-        //
+        $exercise->delete();
+    }
+
+    public function deleteMultiple(Request $request) {
+        $input = $request->all();
+        Exercise::whereIn('id', $input)->delete();
     }
 }

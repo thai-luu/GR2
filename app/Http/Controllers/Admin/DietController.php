@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Eloquent\DietRepositoryEloquent;
 use App\Models\Diet;
 use App\Http\Requests\Diet\CreateDietRequest;
+use App\Http\Requests\Diet\UpdateDietRequest;
 use App\Http\Resources\Diet\DietResource;
 
 class DietController extends Controller
@@ -84,7 +85,7 @@ class DietController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Diet $diet)
+    public function update(UpdateDietRequest $request, Diet $diet)
     {
         $input = $request->all();
         // $input['user_id'] = 0;

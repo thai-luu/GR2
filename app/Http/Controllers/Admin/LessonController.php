@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Lesson; 
 use App\Http\Resources\Lesson\LessonEditResource;
 use App\Http\Resources\Lesson\LessonResource;
+use App\Http\Requests\Lesson\StoreLessonRequest;
 class LessonController extends Controller
 {
     /**
@@ -40,7 +41,7 @@ class LessonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLessonRequest $request)
     {
         $input = $request->all();
         $modeArr = $input['mode_id'];
@@ -93,7 +94,7 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Lesson $lesson)
+    public function update(StoreLessonRequest $request, Lesson $lesson)
     {
         $input = $request->all();
         $modeArr = $input['mode_id'];

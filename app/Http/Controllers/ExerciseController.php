@@ -35,7 +35,7 @@ class ExerciseController extends Controller
 
     public function show(Exercise $exercise)
     {
-        
+        $exercise = $exercise->load(['muscle', 'exerciseCategory', 'level']);
         return ExerciseResource::make($exercise);
     }
 

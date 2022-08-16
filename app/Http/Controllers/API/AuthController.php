@@ -49,7 +49,7 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        $user = $request->user()->load(['permissions', 'target', 'mode', 'level']);
+        $user = $request->user()->load(['permissions', 'target', 'mode', 'level', 'physicalCondition']);
 
         return UserResource::make($user);
     }

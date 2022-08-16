@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Food;
 use App\Http\Resources\FoodResource;
+use App\Http\Requests\Food\StoreFoodRequest;
 
 class FoodController extends Controller
 {
@@ -138,7 +139,7 @@ class FoodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFoodRequest $request)
     {
         $input = $request->all();
         $input['status'] = 0;
@@ -176,9 +177,12 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreFoodRequest $request, Food $food)
     {
-        //
+        $input = $request->all();
+        $input['status'] = 0;
+        $input['user_id'] = $request->user()->id;
+        $food->update($input);
     }
 
     /**
@@ -187,8 +191,14 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Food $food)
     {
-        //
+        $food->delete();
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        $input = $request->all();
+        Food::whereIn('id', $input)->delete();
     }
 }
